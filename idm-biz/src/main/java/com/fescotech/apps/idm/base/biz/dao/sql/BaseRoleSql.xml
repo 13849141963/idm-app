@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseRoleSql">
+	<sql id="baseRole">
+		 t.ROLE_ID roleId,	  	  	 				
+		 t.CORP_ID corpId,	  	  	 				
+		 t.ROLE_CATE roleCate,	  	  	 				
+		 t.ROLE_NAME roleName,	  	  	 				
+		 t.ROLE_CODE roleCode,	  	  	 				
+		 t.ROLE_TYPE roleType,	  	  	 				
+		 t.BUILD_TIME buildTime,	  	  	 				
+		 t.ROLE_DESC roleDesc,	  	  	 				
+		 t.USER_STATUS userStatus,	  	  	 				
+		 t.ROLE_ORDER roleOrder,	  	  	 				
+		 t.ROLE_OPERATOR roleOperator,	  	  	 				
+		 t.OPER_TIME operTime,	  	  	 				
+		 t.ROLE_STATUS roleStatus,
+		 t.SYS_ID sysId,
+		 t.CREATOR creator,
+		 t.CREATOR_NAME creatorName,
+		 t.CREATOR_ORG creatorOrg  	 				
+	</sql>
+
+    <insert id="insertBaseRole" parameterClass="com.fescotech.apps.idm.base.domain.BaseRole">
+			<selectKey keyProperty="roleId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_ROLE.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_ROLE
+		(
+		ROLE_ID,				
+		CORP_ID,				
+		ROLE_CATE,				
+		ROLE_NAME,				
+		ROLE_CODE,				
+		ROLE_TYPE,				
+		BUILD_TIME,				
+		ROLE_DESC,				
+		USER_STATUS,				
+		ROLE_ORDER,				
+		ROLE_OPERATOR,				
+		OPER_TIME,				
+		ROLE_STATUS,
+		SYS_ID,
+		CREATOR,
+		CREATOR_NAME,
+		CREATOR_ORG	
+		)
+		values
+		(
+		   #roleId:NUMERIC#,
+		   #corpId:NUMERIC#,
+		   #roleCate:NUMERIC#,
+		   #roleName:VARCHAR#,
+		   #roleCode:VARCHAR#,
+		   #roleType:NUMERIC#,
+		   #buildTime:TIMESTAMP#,
+		   #roleDesc:VARCHAR#,
+		   #userStatus:NUMERIC#,
+		   #roleOrder:NUMERIC#,
+		   #roleOperator:NUMERIC#,
+		   #operTime:TIMESTAMP#,
+		   #roleStatus:NUMERIC#,
+		   #sysId:NUMERIC#,
+		   #creator:NUMERIC#,
+		   #creatorName:VARCHAR#,
+		   #creatorOrg:NUMERIC#
+		)
+		]]>
+		<selectKey keyProperty="roleId" resultClass="java.lang.Long">
+      	  SELECT @@IDENTITY as roleId FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<update id="updateBaseRole" parameterClass="com.fescotech.apps.idm.base.domain.BaseRole">
+		<![CDATA[   
+		update
+		  BASE_ROLE
+		set
+			CORP_ID =  #corpId:NUMERIC#,
+			ROLE_CATE =  #roleCate:NUMERIC#,
+			ROLE_NAME =  #roleName:VARCHAR#,
+			ROLE_CODE =  #roleCode:VARCHAR#,
+			ROLE_TYPE =  #roleType:NUMERIC#,
+			BUILD_TIME =  #buildTime:TIMESTAMP#,
+			ROLE_DESC =  #roleDesc:VARCHAR#,
+			USER_STATUS =  #userStatus:NUMERIC#,
+			ROLE_ORDER =  #roleOrder:NUMERIC#,
+			ROLE_OPERATOR =  #roleOperator:NUMERIC#,
+			OPER_TIME =  #operTime:TIMESTAMP#,
+			ROLE_STATUS =  #roleStatus:NUMERIC#,
+			SYS_ID = #sysId:NUMERIC#,
+			CREATOR = #creator:NUMERIC#,
+			CREATOR_NAME = #creatorName:VARCHAR#,
+			CREATOR_ORG = #creatorOrg:NUMERIC#
+		where 
+		ROLE_ID =  #roleId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="loadBaseRoleByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseRoleVo">
+		select 
+		<include refid="baseRole" /> 
+		from  BASE_ROLE t
+		where 
+		ROLE_ID =  #value#
+	</select>
+	
+	<select id="queryBaseRole"  parameterClass="com.fescotech.apps.idm.base.domain.BaseRole" resultClass="com.fescotech.apps.idm.base.domain.BaseRole">
+		select 
+		<include refid="baseRoleSql.baseRole" /> 
+		from  BASE_ROLE t
+		where 1=1
+		<isNotEmpty prepend="AND" property="roleId">
+			 ROLE_ID =  #roleId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpId">
+			 CORP_ID =  #corpId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleCate">
+			 ROLE_CATE =  #roleCate:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleName">
+			 ROLE_NAME =  #roleName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleCode">
+			 ROLE_CODE =  #roleCode:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleType">
+			 ROLE_TYPE =  #roleType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="buildTime">
+			 BUILD_TIME =  #buildTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleDesc">
+			 ROLE_DESC =  #roleDesc:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userStatus">
+			 USER_STATUS =  #userStatus:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleOrder">
+			 ROLE_ORDER =  #roleOrder:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleOperator">
+			 ROLE_OPERATOR =  #roleOperator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleStatus">
+			 ROLE_STATUS =  #roleStatus:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sysId">
+			SYS_ID = #sysId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR = #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME = #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR_ORG = #creatorOrg:NUMERIC#
+		</isNotEmpty>
+	</select>
+	<select id="queryBaseRoleCount"  parameterClass="com.fescotech.apps.idm.base.domain.BaseRole" resultClass="int" >
+		select count(*)
+		from  BASE_ROLE t
+		where 1=1 
+		<isNotEmpty prepend="AND" property="roleName">  
+        	ROLE_NAME like '%' || #roleName# || '%' 
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysId">  
+        	SYS_ID =  #sysId#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="creator">  
+        	CREATOR =  #creator#
+        </isNotEmpty>
+	</select>
+	
+	<select id="queryList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseRoleVo">
+		select 
+		<include refid="baseRoleSql.baseRole" /> 
+		from ( select s.*,rownum NUM from base_role s 
+		where rownum &lt;= #end# 
+	  	<isNotEmpty prepend="AND" property="roleName">  
+        	ROLE_NAME like '%' || #roleName# || '%' 
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysId">  
+        	SYS_ID =  #sysId#
+        </isNotEmpty>
+         <isNotEmpty prepend="AND" property="creator">  
+        	CREATOR =  #creator#
+        </isNotEmpty>
+        <isNotEmpty property="orderBy">
+            order by $orderBy$ $orderFlag$
+        </isNotEmpty>
+        ) t 
+        where 
+        t.NUM &gt; #start#
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from base_role where role_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[
+                 #[]#
+            ]]>
+		</iterate>
+	</delete>
+</sqlMap>
+

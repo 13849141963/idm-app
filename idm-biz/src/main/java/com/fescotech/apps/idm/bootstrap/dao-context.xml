@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:idm-jdbc.properties</value>
+                <value>classpath:appconfig.properties</value>
+            </list>
+        </property>
+    </bean>    
+	<bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+        <property name="transactionManager" ref="transactionManager" />
+         <property name="transactionAttributes">
+            <props>
+                <prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="*">PROPAGATION_SUPPORTS</prop>
+            </props>
+        </property>
+    </bean>
+    
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="initialSize">
+			<value>${jdbc.initialSize}</value>
+		</property>
+		<property name="maxActive">
+			<value>${jdbc.maxActive}</value>
+		</property>
+<!-- 		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+			</list>
+		</property> -->
+	</bean>
+	
+	<!-- <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<property name="slowSqlMillis" value="1000" />
+		<property name="logSlowSql" value="true" />
+		<property name="mergeSql" value="true" />
+	</bean>
+ -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:com/fescotech/apps/idm/bootstrap/sql-map-config.xml" />
+        <property name="dataSource" ref="dataSource" />
+        <!-- 自动加载xml -->
+        <!-- <property name="mappingLocations" value="com/fescotech/apps/medicare/*/biz/dao/sql/*Sql.xml" />   -->
+    </bean>
+     
+    <!-- 
+    <bean id="baseDao" class="com.fesco.pafa.app.persistence.dao.ibatis.BaseDaoT">
+        <property name="sqlMapClient" ref="sqlMapClient" />
+    </bean> 
+    --> 
+    <bean id="baseDao" class="com.fescotech.common.ibatis.dao.BaseDao"  init-method="initialize">
+        <property name="sqlMapClient" ref="sqlMapClient" />
+        <property name="sqlExecutor">
+            <ref bean="sqlExecutor" />
+        </property> 
+    </bean>
+    <bean id="abstractBoT" class="com.fesco.pafa.app.biz.bo.impl.AbstractBoT" abstract="true">
+        <property name="baseDao" ref="baseDao" />
+    </bean>
+ 	<bean id="sqlExecutor" class="com.fescotech.common.ibatis.PageSqlExecutor">
+        <property name="dialect">
+            <bean class="com.fescotech.common.ibatis.dialect.OracleDialect" />
+        </property>
+    </bean> 
+</beans>

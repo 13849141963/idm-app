@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseDataSql">
+    <sql id="baseDataSql.getAllField">
+		select  DATA_ID  dataId , DATA_NAME dataName, DATA_TYPE  dataType, DATA_CREATE_TIME dataCreateTime from base_data
+	</sql>
+
+    <!-- 增加 -->
+    <insert id="baseDataSql.insert" parameterClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <selectKey keyProperty="dataId" resultClass="java.lang.Long">
+            select SEQ_BASE_DATA.nextval as  dataId  from dual
+        </selectKey>
+        <![CDATA[
+		insert into base_data
+		(
+		data_id,
+		data_name,
+		data_type
+		)
+		values
+		( #dataId:NUMERIC#,
+		   #dataName:VARCHAR#,
+		   #dataType:VARCHAR#
+		)
+		]]>
+    </insert>
+
+    <!-- 根据主键查询 -->
+    <select id="baseDataSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <include refid="baseDataSql.getAllField"/>
+        where data_id =  #dataId#
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="baseDataSql.deleteBatch">
+        delete from base_data where data_id in
+        <iterate close=")" open="(" conjunction=",">
+            <![CDATA[#[]#]]>
+        </iterate>
+    </delete>
+
+    <select id="baseDataSql.queryList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        select
+               t.DATA_ID dataId, DATA_NAME dataName, DATA_TYPE dataType, DATA_CREATE_TIME dataCreateTime
+        from ( select s.*,rowNum NUM from base_data s
+        where rowNum &lt;= #end#
+
+        <isNotEmpty property="dataId">
+            order by $dataId$
+        </isNotEmpty>
+        ) t
+        where
+        t.NUM &gt;#start#
+    </select>
+
+    <select id="baseDataSql.queryTotal"    resultClass="int">
+        select count(*) from base_data where 1=1
+    </select>
+
+    <update id="baseDataSql.update" parameterClass="com.fescotech.apps.idm.base.domain.BaseData">
+		<![CDATA[
+		update  base_data
+		set
+			data_name =  #dataName:VARCHAR#,
+			data_type =  #dataType:VARCHAR#
+		    where data_id =  #dataId:NUMERIC#
+		]]>
+	</update>
+
+    <!--模糊查询权限集-->
+    <select id="baseDataSql.queryDataByName" parameterClass="com.fescotech.apps.idm.base.domain.BaseData" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <include refid="baseDataSql.getAllField"/>
+        where 1=1
+        <isNotEmpty prepend="AND" property="dataName">
+            data_name like  concat(concat('%', #dataName#), '%')
+        </isNotEmpty>
+    </select>
+
+    <!--模糊查询数据权限集的条数-->
+    <select id="baseDataSql.queryFuzzyTotal" parameterClass="com.fescotech.apps.idm.base.domain.BaseData" resultClass="int">
+        select  count(*) from base_data
+        where 1=1
+        <isNotEmpty prepend="AND" property="dataName">
+            data_name like  concat(concat('%', #dataName#), '%')
+        </isNotEmpty>
+    </select>
+
+
+    <select id="baseDataSql.queryByData"  parameterClass="com.fescotech.apps.idm.base.domain.BaseData" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <include refid="baseDataSql.getAllField"/>
+        where 1=1
+        <isNotEqual prepend="AND" property="dataId" compareValue="0">
+            DATA_ID = #dataId#
+        </isNotEqual>
+        <isNotEmpty prepend="AND" property="dataName">
+            DATA_NAME =  #dataName#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="dataType">
+            DATA_TYPE =  #dataType#
+        </isNotEmpty>
+    </select>
+
+
+
+
+
+
+
+</sqlMap>

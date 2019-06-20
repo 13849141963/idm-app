@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseDictSql">
+	<sql id="baseDict">
+		 t.DICT_ID dictId,	  	  	 				
+		 t.DICT_TYPE dictType,	  	  	 				
+		 t.DICT_CODE dictCode,	  	  	 				
+		 t.DICT_NAME dictName,	  	  	 				
+		 t.DICT_DESC dictDesc,	  	  	 				
+		 t.DICT_ORDER dictOrder	  	  	 				
+	</sql>
+
+    <insert id="insertBaseDict" parameterClass="com.fescotech.apps.idm.base.domain.BaseDict">
+			<selectKey keyProperty="dictId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_DICT.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_DICT
+		(
+		DICT_ID,				
+		DICT_TYPE,				
+		DICT_CODE,				
+		DICT_NAME,				
+		DICT_DESC,				
+		DICT_ORDER				
+		)
+		values
+		(
+		   #dictId:NUMERIC#,
+		   #dictType:VARCHAR#,
+		   #dictCode:VARCHAR#,
+		   #dictName:VARCHAR#,
+		   #dictDesc:VARCHAR#,
+		   #dictOrder:NUMERIC#
+		)
+		]]>
+	</insert>
+	
+	<update id="updateBaseDict" parameterClass="com.fescotech.apps.idm.base.domain.BaseDict">
+		<![CDATA[   
+		update
+		  BASE_DICT
+		set
+			DICT_TYPE =  #dictType:VARCHAR#,
+			DICT_CODE =  #dictCode:VARCHAR#,
+			DICT_NAME =  #dictName:VARCHAR#,
+			DICT_DESC =  #dictDesc:VARCHAR#,
+			DICT_ORDER =  #dictOrder:NUMERIC#
+		where 
+		DICT_ID =  #dictId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="loadBaseDict"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseDict">
+		select 
+		<include refid="baseDictSql.baseDict" /> 
+		from  BASE_DICT t
+		where 
+		DICT_ID =  #value#
+	</select>
+	
+	<select id="queryBaseDict"  parameterClass="com.fescotech.apps.idm.base.domain.BaseDict" resultClass="com.fescotech.apps.idm.base.domain.BaseDict">
+		select 
+		<include refid="baseDictSql.baseDict" /> 
+		from  BASE_DICT t
+		where 1=1
+		<isNotEmpty prepend="AND" property="dictId">
+			 DICT_ID =  #dictId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictType">
+			 DICT_TYPE =  #dictType:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictCode">
+			 DICT_CODE =  #dictCode:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictName">
+			 DICT_NAME =  #dictName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictDesc">
+			 DICT_DESC =  #dictDesc:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictOrder">
+			 DICT_ORDER =  #dictOrder:NUMERIC#
+		</isNotEmpty>
+	</select>
+	<select id="queryBaseDictCount"  parameterClass="com.fescotech.apps.idm.base.domain.BaseDict" resultClass="java.lang.Integer">
+		select count(*)
+		from  BASE_DICT t
+		where 1=1
+		<isNotEmpty prepend="AND" property="dictId">
+			 DICT_ID =  #dictId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictType">
+			 DICT_TYPE =  #dictType:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictCode">
+			 DICT_CODE =  #dictCode:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictName">
+			 DICT_NAME =  #dictName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictDesc">
+			 DICT_DESC =  #dictDesc:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictOrder">
+			 DICT_ORDER =  #dictOrder:NUMERIC#
+		</isNotEmpty>
+	</select>
+	
+	<select id="queryBaseDictList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseDict">
+		select 
+		<include refid="baseDictSql.baseDict" /> 
+		from  BASE_DICT t
+		where 1=1
+		<isNotEmpty prepend="AND" property="dictId">
+			 DICT_ID =  #dictId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictType">
+			 DICT_TYPE =  #dictType:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictCode">
+			 DICT_CODE =  #dictCode:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictName">
+			 DICT_NAME =  #dictName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictDesc">
+			 DICT_DESC =  #dictDesc:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dictOrder">
+			 DICT_ORDER =  #dictOrder:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend=" ORDER BY " property="orderBy">
+			 $orderBy$
+		</isNotEmpty>
+	</select>
+	<select id="queryDictName" parameterClass="com.fescotech.apps.idm.base.domain.BaseDict" resultClass="com.fescotech.apps.idm.base.domain.BaseDict">
+		select 
+		<include refid="baseDictSql.baseDict" /> 
+		from  BASE_DICT t
+		where 
+		DICT_TYPE =  #dictType# and DICT_CODE= #dictCode#
+	</select>
+	<select id="queryDictItemList" parameterClass="java.lang.String" resultClass="com.fescotech.apps.idm.base.domain.BaseDict">
+		select 
+		<include refid="baseDictSql.baseDict" /> 
+		from  BASE_DICT t
+		where 
+		t.DICT_TYPE =  #value#
+	</select>
+		
+</sqlMap>

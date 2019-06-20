@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="apiLogSql">
+	<sql id="apiLog">
+		 t.LOG_ID logId,	  	  	 				
+		 t.LOG_URL logUrl,	  	  	 				
+		 t.HTTP_METHOD httpMethod,	  	  	 				
+		 t.FUNCTION_ID functionId,	  	  	 				
+		 t.FUNCTION_NAME functionName,	  	  	 				
+		 t.USER_ID userId,	  	  	 				
+		 t.USER_NAME userName,	  	  	 				
+		 t.IP_ADDR ipAddr,	  	  	 				
+		 t.OP_TYPE opType,	
+		 <!-- t.LOG_DATA logData,	 -->  	  	 				
+		 t.OP_RESULT opResult,	  	  	 				
+		 t.LOG_MSG logMsg,	  	  	 				
+		 t.OP_START_TIME opStartTime,
+		 t.OP_END_TIME opEndTime
+	</sql>
+
+    <insert id="insertApiLog" parameterClass="com.fescotech.apps.idm.base.domain.ApiLog">
+		<![CDATA[   
+		insert into API_LOGS
+		(
+		LOG_ID,				
+		LOG_URL,				
+		HTTP_METHOD,				
+		FUNCTION_ID,				
+		FUNCTION_NAME,				
+		USER_ID,				
+		USER_NAME,				
+		IP_ADDR,				
+		OP_TYPE,				
+		LOG_DATA,				
+		OP_RESULT,	
+		LOG_MSG,			
+		OP_START_TIME,
+		OP_END_TIME
+		)
+		values
+		(
+		   #logId#,
+		   #logUrl#,
+		   #httpMethod#,
+		   #functionId#,
+		   #functionName#,
+		   #userId#,
+		   #userName#,
+		   #ipAddr#,
+		   #opType#,
+		   #logData#,
+		   #opResult#,
+		   #logMsg#,
+		   #opStartTime#,
+		   #opEndTime#
+		)
+		]]>
+	</insert>
+	
+	<select id="queryApiLogCount"  parameterClass="com.fescotech.apps.idm.base.domain.ApiLog" resultClass="int" >
+		select count(*)
+		from  API_LOGS t 
+		where 1=1 
+		<isNotEmpty prepend="AND" property="userName">  
+        	USER_NAME like '%' || #userName# || '%' 
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="beginTime">  
+        	( to_char(OP_START_TIME,'YYYY-MM-DD hh:mm') ) between #beginTime# 
+        </isNotEmpty> 
+        <isNotEmpty prepend="AND" property="endTime">  
+        	 #endTime#
+        </isNotEmpty> 
+	</select>
+	
+	<select id="queryList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.vo.ApiLogVo">
+		select 
+		<include refid="apiLogSql.apiLog" /> 
+		from ( select s.*,rownum NUM from ( select * from api_logs 
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="userName">  
+        	USER_NAME like '%' || #userName# || '%' 
+        </isNotEmpty>  
+		<isNotEmpty prepend="AND" property="beginTime">  
+        	( to_char(OP_START_TIME,'YYYY-MM-DD hh:mm') ) between #beginTime# 
+        </isNotEmpty> 
+        <isNotEmpty prepend="AND" property="endTime">  
+        	 #endTime#
+        </isNotEmpty> 
+        <isEmpty property="orderBy">
+			order by OP_START_TIME desc 
+		</isEmpty>
+		<isNotEmpty property="orderBy">
+            order by $orderBy$ $orderFlag$
+        </isNotEmpty>
+        ) s 
+		where rownum &lt;= #end# 
+        ) t 
+        where 
+        t.NUM &gt; #start#
+	</select>
+	
+	<select id="loardLogMsgByKey"  parameterClass="java.lang.String" resultClass="com.fescotech.apps.idm.base.domain.vo.ApiLogVo">
+		select 
+		t.LOG_MSG logMsg 
+		from  API_LOGS t 
+		where 
+		LOG_ID =  #value#
+	</select>
+	
+	<select id="loadApiLogByKey"  parameterClass="java.lang.String" resultClass="com.fescotech.apps.idm.base.domain.vo.ApiLogVo">
+		select 
+		<include refid="apiLog" /> 
+		from  API_LOGS t 
+		where 
+		LOG_ID =  #value#
+	</select>
+	
+</sqlMap>
+

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysMenuSql">
+	<sql id="sysMenuSql.getAllField">
+		select 
+		 t.icon icon,	  	  	 				
+		 t.menu_id menuId,	  	  	 				
+		 t.perms perms,	  	  	 				
+		 t.order_num orderNum,	  	  	 				
+		 t.menu_name menuName,	  	  	 				
+		 t.menu_type menuType,	  	  	 				
+		 t.url url,	  	  	 				
+		 t.parent_id parentId	  	  	 				
+		from  sys_menu t
+	</sql>
+    <insert id="sysMenuSql.insert" parameterClass="com.fescotech.apps.idm.admin.domain.SysMenu">
+    	<selectKey resultClass="Long" keyProperty="menuId">
+    		select SEQ_SYS_MENU.nextval as  menuId  from dual
+    	</selectKey>
+		<![CDATA[   
+		insert into sys_menu
+		(menu_id,
+		icon,				
+		perms,				
+		order_num,				
+		menu_name,				
+		menu_type,				
+		url,				
+		parent_id				
+		)
+		values
+		(  #menuId:NUMERIC#,
+		   #icon:VARCHAR#,
+		   #perms:VARCHAR#,
+		   #orderNum:NUMERIC#,
+		   #menuName:VARCHAR#,
+		   #menuType:NUMERIC#,
+		   #url:VARCHAR#,
+		   #parentId:NUMERIC#
+		)
+		]]>
+	</insert>
+	
+	<update id="sysMenuSql.update" parameterClass="com.fescotech.apps.idm.admin.domain.SysMenu">
+		<![CDATA[   
+		update
+		  sys_menu
+		set
+			icon =  #icon:VARCHAR#,
+			perms =  #perms:VARCHAR#,
+			order_num =  #orderNum:NUMERIC#,
+			menu_name =  #menuName:VARCHAR#,
+			menu_type =  #menuType:NUMERIC#,
+			url =  #url:VARCHAR#,
+			parent_id =  #parentId:NUMERIC#
+		where menu_id =  #menuId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="sysMenuSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.admin.domain.SysMenu">
+		<include refid="sysMenuSql.getAllField"/>
+		where menu_id =  #value#
+	</select>
+	<select id="sysMenuSql.querySysMenu"  parameterClass="com.fescotech.apps.idm.admin.domain.SysMenu" resultClass="com.fescotech.apps.idm.admin.domain.vo.SysMenuVo">
+		<include refid="sysMenuSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="icon">  
+        	icon =  #icon#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuId">  
+        	menu_id =  #menuId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="perms">  
+        	perms =  #perms#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orderNum">  
+        	order_num =  #orderNum#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuName">  
+        	menu_name =  #menuName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuType">  
+        	menu_type =  #menuType#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="url">  
+        	url =  #url#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="parentId">  
+        	parent_id =  #parentId#
+        </isNotEmpty>   
+	</select>
+	
+	<select id="sysMenuSql.queryList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.admin.domain.vo.SysMenuVo">
+		select 
+		 t.icon icon,	  	  	 				
+		 t.menu_id menuId,	  	  	 				
+		 t.perms perms,	  	  	 				
+		 t.order_num orderNum,	  	  	 				
+		 t.menu_name menuName,	  	  	 				
+		 t.menu_type menuType,	  	  	 				
+		 t.url url,	  	  	 				
+		 t.parent_id parentId	  	  	 				
+		 from ( select s.*,rownum NUM from sys_menu s 
+		where rownum &lt;= #end#
+	 	<isNotEmpty prepend="AND" property="icon">  
+        	icon =  #icon#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuId">  
+        	menu_id =  #menuId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="perms">  
+        	perms =  #perms#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orderNum">  
+        	order_num =  #orderNum#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuName">  
+        	menu_name =  #menuName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuType">  
+        	menu_type =  #menuType#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="url">  
+        	url =  #url#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="parentId">  
+        	parent_id =  #parentId#
+        </isNotEmpty> 
+        order by menu_id asc   
+         ) t 
+        where 
+        t.NUM &gt; #start#             
+	</select>
+		
+	<select id="sysMenuSql.queryTotal"  parameterClass="java.util.HashMap" resultClass="int">
+		select count(*) from sys_menu
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="icon">  
+        	icon =  #icon#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuId">  
+        	menu_id =  #menuId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="perms">  
+        	perms =  #perms#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orderNum">  
+        	order_num =  #orderNum#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuName">  
+        	menu_name =  #menuName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuType">  
+        	menu_type =  #menuType#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="url">  
+        	url =  #url#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="parentId">  
+        	parent_id =  #parentId#
+        </isNotEmpty>         
+	</select>
+	
+	<!-- 删除菜单 -->
+	<delete id="sysMenuSql.deleteMenu">
+		delete from sys_menu where menu_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+	<!-- 删除角色菜单表 -->
+	<delete id="sysMenuSql.deleteRoleMenu">
+		delete from sys_role_menu where menu_id in  
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+	<select id="queryNotButtonList" resultClass="com.fescotech.apps.idm.admin.domain.vo.SysMenuVo">
+		<include refid="sysMenuSql.getAllField"/> where menu_type != 2 order by order_num asc 
+	</select>
+	
+	<select id="sysMenuSql.queryListParentId"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.admin.domain.vo.SysMenuVo">
+		<include refid="sysMenuSql.getAllField"/>	where  parent_id =  #value#  order by menu_id asc 	 	 
+	</select>
+</sqlMap>

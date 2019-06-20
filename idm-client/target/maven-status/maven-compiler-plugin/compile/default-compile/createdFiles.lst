@@ -1,0 +1,12 @@
+com\fescotech\idm\client\App.class
+com\fescotech\idm\client\util\IdmRemoteUtil.class
+com\fescotech\idm\client\util\EncryptUtil.class
+com\fescotech\idm\client\util\IdmOpenUtil.class
+com\fescotech\idm\client\model\IdmUserDto.class
+com\fescotech\idm\client\exception\IdmException.class
+com\fescotech\idm\client\model\ResultFunctionDto.class
+com\fescotech\idm\client\util\IdmConfig.class
+com\fescotech\idm\client\support\IdmUserSupport.class
+com\fescotech\idm\client\model\IdmUser.class
+com\fescotech\idm\client\model\RemoteResult.class
+com\fescotech\idm\client\util\Md5Util.class

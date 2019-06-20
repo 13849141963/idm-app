@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseUserRoleDataSql">
+	<sql id="baseUserRoleData">
+		 t.BASE_USER_ROLE_DATA_ID baseUserRoleDataId,	  	  	 				
+		 t.BASE_USER_ROLE_ID baseUserRoleId,	  	  	 				
+		 t.ORG_ID orgId,	  	  	 				
+		 t.CREATE_ID createId,	  	  	 				
+		 t.CREATE_TIME createTime,	  	  	 				
+		 t.OPERATOR operator,	  	  	 				
+		 t.OPER_TIME operTime,	  	  	 				
+		 t.DATA_STATE dataState	  	  	 				
+	</sql>
+
+    <insert id="insertBaseUserRoleData" parameterClass="com.fescotech.apps.idm.base.domain.BaseUserRoleData">
+			<selectKey keyProperty="baseUserRoleDataId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_USER_ROLE_DATA.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_USER_ROLE_DATA
+		(
+		BASE_USER_ROLE_DATA_ID,				
+		BASE_USER_ROLE_ID,				
+		ORG_ID,				
+		CREATE_ID,				
+		CREATE_TIME,				
+		OPERATOR,				
+		OPER_TIME,				
+		DATA_STATE				
+		)
+		values
+		(
+		   #baseUserRoleDataId:NUMERIC#,
+		   #baseUserRoleId:NUMERIC#,
+		   #orgId:NUMERIC#,
+		   #createId:NUMERIC#,
+		   #createTime:TIMESTAMP#,
+		   #operator:NUMERIC#,
+		   #operTime:TIMESTAMP#,
+		   #dataState:NUMERIC#
+		)
+		]]>
+		<selectKey keyProperty="baseUserRoleDataId" resultClass="java.lang.Long">
+      	  SELECT @@IDENTITY as baseUserRoleDataId FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<update id="updateBaseUserRoleData" parameterClass="com.fescotech.apps.idm.base.domain.BaseUserRoleData">
+		<![CDATA[   
+		update
+		  BASE_USER_ROLE_DATA
+		set
+			BASE_USER_ROLE_ID =  #baseUserRoleId:NUMERIC#,
+			ORG_ID =  #orgId:NUMERIC#,
+			CREATE_ID =  #createId:NUMERIC#,
+			CREATE_TIME =  #createTime:TIMESTAMP#,
+			OPERATOR =  #operator:NUMERIC#,
+			OPER_TIME =  #operTime:TIMESTAMP#,
+			DATA_STATE =  #dataState:NUMERIC#
+		where 
+		BASE_USER_ROLE_DATA_ID =  #baseUserRoleDataId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="loadBaseUserRoleDataByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseUserRoleData">
+		select 
+		<include refid="baseUserRoleDataSql.baseUserRoleData" /> 
+		from  BASE_USER_ROLE_DATA t
+		where 
+		BASE_USER_ROLE_DATA_ID =  #value#
+	</select>
+	
+	<select id="queryBaseUserRoleData"  parameterClass="com.fescotech.apps.idm.base.domain.BaseUserRoleData" resultClass="com.fescotech.apps.idm.base.domain.BaseUserRoleData">
+		select 
+		<include refid="baseUserRoleDataSql.baseUserRoleData" /> 
+		from  BASE_USER_ROLE_DATA t
+		where 1=1
+		<isNotEmpty prepend="AND" property="baseUserRoleDataId">
+			 BASE_USER_ROLE_DATA_ID =  #baseUserRoleDataId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="baseUserRoleId">
+			 BASE_USER_ROLE_ID =  #baseUserRoleId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="orgId">
+			 ORG_ID =  #orgId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createId">
+			 CREATE_ID =  #createId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createTime">
+			 CREATE_TIME =  #createTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator">
+			 OPERATOR =  #operator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dataState">
+			 DATA_STATE =  #dataState:NUMERIC#
+		</isNotEmpty>
+	</select>
+	<select id="queryBaseUserRoleDataCount"  parameterClass="com.fescotech.apps.idm.base.domain.BaseUserRoleData" resultClass="int">
+		select count(*)
+		from  BASE_USER_ROLE_DATA t
+		where 1=1
+		<isNotEmpty prepend="AND" property="baseUserRoleDataId">
+			 BASE_USER_ROLE_DATA_ID =  #baseUserRoleDataId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="baseUserRoleId">
+			 BASE_USER_ROLE_ID =  #baseUserRoleId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="orgId">
+			 ORG_ID =  #orgId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createId">
+			 CREATE_ID =  #createId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createTime">
+			 CREATE_TIME =  #createTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator">
+			 OPERATOR =  #operator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dataState">
+			 DATA_STATE =  #dataState:NUMERIC#
+		</isNotEmpty>
+	</select>
+</sqlMap>
+

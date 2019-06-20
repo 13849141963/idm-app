@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysConfigSql">
+	<sql id="sysConfigSql.getAllField">
+		 select 
+		 t.conf_id confId,	  	  	 				
+		 t.remark remark,	  	  	 				
+		 t.conf_status confStatus,	  	  	 				
+		 t.conf_value confValue,	  	  	 				
+		 t.conf_key confKey	  	  	 				
+		 from  sys_config t
+	</sql>
+    <insert id="sysConfigSql.insert" parameterClass="com.fescotech.apps.idm.admin.domain.SysConfig">
+    	<selectKey resultClass="Long" keyProperty="confId">
+    		select SEQ_SYS_CONFIG.nextval as  confId  from dual
+    	</selectKey>
+		<![CDATA[   
+		insert into sys_config (conf_id,remark,conf_status,conf_value,conf_key	)
+		values
+		(
+		   #confId:NUMERIC#,
+		   #remark:VARCHAR#,
+		   #confStatus:NUMERIC#,
+		   #confValue:VARCHAR#,
+		   #confKey:VARCHAR#
+		)
+		]]>
+	</insert>
+	
+	<update id="sysConfigSql.update" parameterClass="com.fescotech.apps.idm.admin.domain.SysConfig">
+		<![CDATA[   
+		update  sys_config
+		set remark =  #remark:VARCHAR#,
+			conf_status =  #confStatus:NUMERIC#,
+			conf_value =  #confValue:VARCHAR#,
+			conf_key =  #confKey:VARCHAR#
+		where conf_id =  #confId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="sysConfigSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.admin.domain.SysConfig">
+		<include refid="sysConfigSql.getAllField"/>
+		where 
+		conf_id =  #value#
+	</select>
+	<select id="sysConfigSql.querySysConfig"  parameterClass="com.fescotech.apps.idm.admin.domain.SysConfig" resultClass="com.fescotech.apps.idm.admin.domain.SysConfig">
+		<include refid="sysConfigSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="confId">  
+        	conf_id =  #confId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	remark =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="confStatus">  
+        	conf_status =  #confStatus#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="confValue">  
+        	conf_value =  #confValue#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="confKey">  
+        	conf_key =  #confKey#
+        </isNotEmpty>   
+	</select>
+	<select id="sysConfigSql.querySysConfigMap"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.admin.domain.SysConfig">
+		<include refid="sysConfigSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="confId">  
+        	conf_id =  #confId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	remark =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="confStatus">  
+        	conf_status =  #confStatus#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="confValue">  
+        	conf_value =  #confValue#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="confKey">  
+        	conf_key =  #confKey#
+        </isNotEmpty> 
+	</select>
+	<delete id="sysConfigSql.deleteBatch">
+		delete from sys_config where conf_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+</sqlMap>

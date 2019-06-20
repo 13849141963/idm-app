@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseOrganizationSql">
+	<sql id="baseOrganizationSql.getAllField">
+		select 
+		 t.ORG_NAME orgName,	  	  	 				
+		 t.ORG_TYPE orgType,	  	  	 				
+		 t.ORG_STATE orgState,	  	  	 				
+		 t.POSTCODE postcode,	  	  	 				
+		 t.ORG_LEVEL orgLevel,	  	  	 				
+		 t.OPERATOR operator,	  	  	 				
+		 t.SHORT_NAME shortName,	  	  	 				
+		 t.CHARGE_TYPE chargeType,	  	  	 				
+		 t.OPER_TIME operTime,	  	  	 				
+		 t.PHONE phone,	  	  	 				
+		 t.IS_VIRTUAL isVirtual,	  	  	 				
+		 t.CORP_ID corpId,	  	  	 				
+		 t.IS_LEAF isLeaf,	  	  	 				
+		 t.FAX fax,	  	  	 				
+		 t.OLD_ORG_NO oldOrgNo,	  	  	 				
+		 t.ADDRESS address,	  	  	 				
+		 t.DEP_TYPE depType,	  	  	 				
+		 t.TELL tell,	  	  	 				
+		 t.ORG_ID orgId,	  	  	 				
+		 t.MANAGER_ID managerId,	  	  	 				
+		 t.IS_ROOT isRoot,	  	  	 				
+		 t.DESCRIPTION description,	  	  	 				
+		 t.DISPLAY_ORDER displayOrder,	  	  	 				
+		 t.ORG_CODE orgCode,	  	  	 				
+		 t.PARENT_ID parentId	  	  	 				
+		from  BASE_ORGANIZATION t
+	</sql>
+	<sql id="baseOrganizationSql.getAllFieldAndParentName">
+		select org.ORG_NAME parentName,
+		 t.ORG_NAME orgName,	  	  	 				
+		 t.ORG_TYPE orgType,	  	  	 				
+		 t.ORG_STATE orgState,	  	  	 				
+		 t.POSTCODE postcode,	  	  	 				
+		 t.ORG_LEVEL orgLevel,	  	  	 				
+		 t.OPERATOR operator,	  	  	 				
+		 t.SHORT_NAME shortName,	  	  	 				
+		 t.CHARGE_TYPE chargeType,	  	  	 				
+		 t.OPER_TIME operTime,	  	  	 				
+		 t.PHONE phone,	  	  	 				
+		 t.IS_VIRTUAL isVirtual,	  	  	 				
+		 t.CORP_ID corpId,	  	  	 				
+		 t.IS_LEAF isLeaf,	  	  	 				
+		 t.FAX fax,	  	  	 				
+		 t.OLD_ORG_NO oldOrgNo,	  	  	 				
+		 t.ADDRESS address,	  	  	 				
+		 t.DEP_TYPE depType,	  	  	 				
+		 t.TELL tell,	  	  	 				
+		 t.ORG_ID orgId,	  	  	 				
+		 t.MANAGER_ID managerId,	  	  	 				
+		 t.IS_ROOT isRoot,	  	  	 				
+		 t.DESCRIPTION description,	  	  	 				
+		 t.DISPLAY_ORDER displayOrder,	  	  	 				
+		 t.ORG_CODE orgCode,	  	  	 				
+		 t.PARENT_ID parentId	  	  	 				
+		from  BASE_ORGANIZATION t 
+		left join BASE_ORGANIZATION org 
+		on t.PARENT_ID = org.ORG_ID 
+	</sql>
+    <insert id="baseOrganizationSql.insert" parameterClass="com.fescotech.apps.idm.base.domain.BaseOrganization">
+			<selectKey keyProperty="orgId" resultClass="Long">
+	      	SELECT SEQ_BASE_ORGANIZATION.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_ORGANIZATION
+		(
+		ORG_NAME,				
+		ORG_TYPE,				
+		ORG_STATE,				
+		POSTCODE,				
+		ORG_LEVEL,				
+		OPERATOR,				
+		SHORT_NAME,				
+		CHARGE_TYPE,				
+		OPER_TIME,				
+		PHONE,				
+		IS_VIRTUAL,				
+		CORP_ID,				
+		IS_LEAF,				
+		FAX,				
+		OLD_ORG_NO,				
+		ADDRESS,				
+		DEP_TYPE,				
+		TELL,				
+		ORG_ID,				
+		MANAGER_ID,				
+		IS_ROOT,				
+		DESCRIPTION,				
+		DISPLAY_ORDER,				
+		ORG_CODE,				
+		PARENT_ID				
+		)
+		values
+		(
+		   #orgName:VARCHAR#,
+		   #orgType:VARCHAR#,
+		   #orgState:NUMERIC#,
+		   #postcode:VARCHAR#,
+		   #orgLevel:NUMERIC#,
+		   #operator:NUMERIC#,
+		   #shortName:VARCHAR#,
+		   #chargeType:NUMERIC#,
+		   #operTime:TIMESTAMP#,
+		   #phone:VARCHAR#,
+		   #isVirtual:NUMERIC#,
+		   #corpId:NUMERIC#,
+		   #isLeaf:NUMERIC#,
+		   #fax:VARCHAR#,
+		   #oldOrgNo:VARCHAR#,
+		   #address:VARCHAR#,
+		   #depType:NUMERIC#,
+		   #tell:VARCHAR#,
+		   #orgId:NUMERIC#,
+		   #managerId:NUMERIC#,
+		   #isRoot:NUMERIC#,
+		   #description:VARCHAR#,
+		   #displayOrder:NUMERIC#,
+		   #orgCode:VARCHAR#,
+		   #parentId:NUMERIC#
+		)
+		]]>
+
+	</insert>
+	
+	<update id="baseOrganizationSql.update" parameterClass="com.fescotech.apps.idm.base.domain.BaseOrganization">
+		<![CDATA[   
+		update
+		  BASE_ORGANIZATION
+		set
+			ORG_NAME =  #orgName:VARCHAR#,
+			ORG_TYPE =  #orgType:VARCHAR#,
+			ORG_STATE =  #orgState:NUMERIC#,
+			POSTCODE =  #postcode:VARCHAR#,
+			ORG_LEVEL =  #orgLevel:NUMERIC#,
+			OPERATOR =  #operator:NUMERIC#,
+			SHORT_NAME =  #shortName:VARCHAR#,
+			CHARGE_TYPE =  #chargeType:NUMERIC#,
+			OPER_TIME =  #operTime:TIMESTAMP#,
+			PHONE =  #phone:VARCHAR#,
+			IS_VIRTUAL =  #isVirtual:NUMERIC#,
+			CORP_ID =  #corpId:NUMERIC#,
+			IS_LEAF =  #isLeaf:NUMERIC#,
+			FAX =  #fax:VARCHAR#,
+			OLD_ORG_NO =  #oldOrgNo:VARCHAR#,
+			ADDRESS =  #address:VARCHAR#,
+			DEP_TYPE =  #depType:NUMERIC#,
+			TELL =  #tell:VARCHAR#,
+			ORG_ID =  #orgId:NUMERIC#,
+			MANAGER_ID =  #managerId:NUMERIC#,
+			IS_ROOT =  #isRoot:NUMERIC#,
+			DESCRIPTION =  #description:VARCHAR#,
+			DISPLAY_ORDER =  #displayOrder:NUMERIC#,
+			ORG_CODE =  #orgCode:VARCHAR#,
+			PARENT_ID =  #parentId:NUMERIC#
+		where 
+		ORG_ID =  #orgId:VARCHAR#
+		]]>
+	</update>
+	
+	<select id="baseOrganizationSql.queryByKey"  parameterClass="Long" resultClass="com.fescotech.apps.idm.base.domain.BaseOrganization">
+		<include refid="baseOrganizationSql.getAllFieldAndParentName"/>
+		where 
+		t.ORG_ID =  #value#
+	</select>
+	<select id="baseOrganizationSql.queryBaseOrganization"  parameterClass="com.fescotech.apps.idm.base.domain.BaseOrganization" resultClass="com.fescotech.apps.idm.base.domain.BaseOrganization">
+		<include refid="baseOrganizationSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="orgName">  
+        	ORG_NAME =  #orgName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orgType">  
+        	ORG_TYPE =  #orgType#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orgState">  
+        	ORG_STATE =  #orgState#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="postcode">  
+        	POSTCODE =  #postcode#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orgLevel">  
+        	ORG_LEVEL =  #orgLevel#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operator">  
+        	OPERATOR =  #operator#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="shortName">  
+        	SHORT_NAME =  #shortName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="chargeType">  
+        	CHARGE_TYPE =  #chargeType#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operTime">  
+        	OPER_TIME =  #operTime#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="phone">  
+        	PHONE =  #phone#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="isVirtual">  
+        	IS_VIRTUAL =  #isVirtual#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="corpId">  
+        	CORP_ID =  #corpId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="isLeaf">  
+        	IS_LEAF =  #isLeaf#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="fax">  
+        	FAX =  #fax#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="oldOrgNo">  
+        	OLD_ORG_NO =  #oldOrgNo#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="address">  
+        	ADDRESS =  #address#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="depType">  
+        	DEP_TYPE =  #depType#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="tell">  
+        	TELL =  #tell#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orgId">  
+        	ORG_ID =  #orgId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="managerId">  
+        	MANAGER_ID =  #managerId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="isRoot">  
+        	IS_ROOT =  #isRoot#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="description">  
+        	DESCRIPTION =  #description#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="displayOrder">  
+        	DISPLAY_ORDER =  #displayOrder#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="orgCode">  
+        	ORG_CODE =  #orgCode#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="parentId">  
+        	PARENT_ID =  #parentId#
+        </isNotEmpty>   
+	</select>
+	
+	<select id="queryTreeList" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseOrganizationVo">
+		<include refid="baseOrganizationSql.getAllField"/> 
+	</select>
+	<sql id="baseOrganizationSql.AllFieldAndParentNameList">
+		 org.ORG_NAME parentName,
+		 t.ORG_NAME orgName,	  	  	 				
+		 t.ORG_TYPE orgType,	  	  	 				
+		 t.ORG_STATE orgState,	  	  	 				
+		 t.POSTCODE postcode,	  	  	 				
+		 t.ORG_LEVEL orgLevel,	  	  	 				
+		 t.OPERATOR operator,	  	  	 				
+		 t.SHORT_NAME shortName,	  	  	 				
+		 t.CHARGE_TYPE chargeType,	  	  	 				
+		 t.OPER_TIME operTime,	  	  	 				
+		 t.PHONE phone,	  	  	 				
+		 t.IS_VIRTUAL isVirtual,	  	  	 				
+		 t.CORP_ID corpId,	  	  	 				
+		 t.IS_LEAF isLeaf,	  	  	 				
+		 t.FAX fax,	  	  	 				
+		 t.OLD_ORG_NO oldOrgNo,	  	  	 				
+		 t.ADDRESS address,	  	  	 				
+		 t.DEP_TYPE depType,	  	  	 				
+		 t.TELL tell,	  	  	 				
+		 t.ORG_ID orgId,	  	  	 				
+		 t.MANAGER_ID managerId,	  	  	 				
+		 t.IS_ROOT isRoot,	  	  	 				
+		 t.DESCRIPTION description,	  	  	 				
+		 t.DISPLAY_ORDER displayOrder,	  	  	 				
+		 t.ORG_CODE orgCode,	  	  	 				
+		 t.PARENT_ID parentId 
+	</sql>
+	<select id="queryList" resultClass="com.fescotech.apps.idm.base.domain.BaseOrganization">
+	   select 
+	   companyName,
+	   parentName,
+	   orgName,
+       orgType,
+       orgState,
+       postcode,
+       orgLevel,
+       operator,
+       shortName,
+       chargeType,
+       operTime,
+       phone,
+       isVirtual,
+       corpId,
+       isLeaf,
+       fax,
+       oldOrgNo,
+       address,
+       depType,
+       tell,
+       orgId,
+       managerId,
+       isRoot,
+       description,
+       displayOrder,
+       orgCode,
+       parentId
+  from (select v.*, rownum rn
+          from (select corp.COMPANY_NAME companyName,
+          			   org.ORG_NAME    parentName,
+                       t.ORG_NAME      orgName,
+                       t.ORG_TYPE      orgType,
+                       t.ORG_STATE     orgState,
+                       t.POSTCODE      postcode,
+                       t.ORG_LEVEL     orgLevel,
+                       t.OPERATOR      operator,
+                       t.SHORT_NAME    shortName,
+                       t.CHARGE_TYPE   chargeType,
+                       t.OPER_TIME     operTime,
+                       t.PHONE         phone,
+                       t.IS_VIRTUAL    isVirtual,
+                       t.CORP_ID       corpId,
+                       t.IS_LEAF       isLeaf,
+                       t.FAX           fax,
+                       t.OLD_ORG_NO    oldOrgNo,
+                       t.ADDRESS       address,
+                       t.DEP_TYPE      depType,
+                       t.TELL          tell,
+                       t.ORG_ID        orgId,
+                       t.MANAGER_ID    managerId,
+                       t.IS_ROOT       isRoot,
+                       t.DESCRIPTION   description,
+                       t.DISPLAY_ORDER displayOrder,
+                       t.ORG_CODE      orgCode,
+                       t.PARENT_ID     parentId
+                  from BASE_ORGANIZATION t
+                  left join BASE_ORGANIZATION org on t.PARENT_ID = org.ORG_ID 
+                  left join BASE_CORPINFO corp on t.CORP_ID = corp.CORP_ID
+                 where 1 = 1
+                 <isNotEmpty prepend="AND" property="orgId">  
+        		 t.ORG_ID =  #orgId#
+        		 </isNotEmpty>
+        		 <isNotEmpty prepend="OR" property="orgId">  
+        		 t.PARENT_ID =  #orgId#
+        		 </isNotEmpty>
+        		 <isNotEmpty prepend="AND" property="corpId">  
+        		 t.CORP_ID =  #corpId#
+        		 </isNotEmpty>
+				<isNotEmpty prepend="AND" property="orgName">
+					t.ORG_NAME  like  concat(concat('%', #orgName#), '%')
+				</isNotEmpty>
+        		 <isEmpty property="orderBy">
+        		 order by t.org_id asc
+        		 </isEmpty>
+                 <isNotEmpty property="orderBy">
+                 order by $orderBy$ $orderFlag$
+                 </isNotEmpty>
+                 ) v) b
+			where b.rn between #start# and #end#
+	</select>
+	
+	<select id="queryTotal"  resultClass="int">
+		select count(*) from BASE_ORGANIZATION 
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="orgId">  
+        	ORG_ID =  #orgId#
+        </isNotEmpty>
+        <isNotEmpty prepend="OR" property="orgId">  
+        	PARENT_ID =  #orgId#
+        </isNotEmpty>
+		<isNotEmpty prepend="AND" property="orgName">
+		   ORG_NAME  like  concat(concat('%', #orgName#), '%')
+		</isNotEmpty>
+        <isNotEmpty prepend="AND" property="corpId">  
+        	CORP_ID =  #corpId#
+        </isNotEmpty>
+	</select>	
+	
+	<delete id="deleteBatch">
+		delete from BASE_ORGANIZATION where org_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>		 
+	</delete>
+	
+	<!-- 递归查询所有的机构 -->
+	<select id="queryAllOrgList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseOrganization">
+	     select 
+			 t.ORG_NAME orgName,	  	  	 				
+			 t.ORG_TYPE orgType,	  	  	 				
+			 t.ORG_STATE orgState,	  	  	 				
+			 t.POSTCODE postcode,	  	  	 				
+			 t.ORG_LEVEL orgLevel,	  	  	 				
+			 t.OPERATOR operator,	  	  	 				
+			 t.SHORT_NAME shortName,	  	  	 				
+			 t.CHARGE_TYPE chargeType,	  	  	 				
+			 t.OPER_TIME operTime,	  	  	 				
+			 t.PHONE phone,	  	  	 				
+			 t.IS_VIRTUAL isVirtual,	  	  	 				
+			 t.CORP_ID corpId,	  	  	 				
+			 t.IS_LEAF isLeaf,	  	  	 				
+			 t.FAX fax,	  	  	 				
+			 t.OLD_ORG_NO oldOrgNo,	  	  	 				
+			 t.ADDRESS address,	  	  	 				
+			 t.DEP_TYPE depType,	  	  	 				
+			 t.TELL tell,	  	  	 				
+			 t.ORG_ID orgId,	  	  	 				
+			 t.MANAGER_ID managerId,	  	  	 				
+			 t.IS_ROOT isRoot,	  	  	 				
+			 t.DESCRIPTION description,	  	  	 				
+			 t.DISPLAY_ORDER displayOrder,	  	  	 				
+			 t.ORG_CODE orgCode,	  	  	 				
+			 t.PARENT_ID parentId	  	  	 				
+		from  BASE_ORGANIZATION t
+			<isNotEmpty  property="orgId"> 
+		       	start with t.ORG_ID = #orgId#  connect by prior t.ORG_ID= t.PARENT_ID
+	       	</isNotEmpty>
+	</select>
+	<!-- 查询所有的机构 -->
+	<select id="queryOrgList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseOrganization">
+	     select 
+			 t.ORG_NAME orgName,	  	  	 				
+			 t.ORG_TYPE orgType,	  	  	 				
+			 t.ORG_STATE orgState,	  	  	 				
+			 t.POSTCODE postcode,	  	  	 				
+			 t.ORG_LEVEL orgLevel,	  	  	 				
+			 t.OPERATOR operator,	  	  	 				
+			 t.SHORT_NAME shortName,	  	  	 				
+			 t.CHARGE_TYPE chargeType,	  	  	 				
+			 t.OPER_TIME operTime,	  	  	 				
+			 t.PHONE phone,	  	  	 				
+			 t.IS_VIRTUAL isVirtual,	  	  	 				
+			 t.CORP_ID corpId,	  	  	 				
+			 t.IS_LEAF isLeaf,	  	  	 				
+			 t.FAX fax,	  	  	 				
+			 t.OLD_ORG_NO oldOrgNo,	  	  	 				
+			 t.ADDRESS address,	  	  	 				
+			 t.DEP_TYPE depType,	  	  	 				
+			 t.TELL tell,	  	  	 				
+			 t.ORG_ID orgId,	  	  	 				
+			 t.MANAGER_ID managerId,	  	  	 				
+			 t.IS_ROOT isRoot,	  	  	 				
+			 t.DESCRIPTION description,	  	  	 				
+			 t.DISPLAY_ORDER displayOrder,	  	  	 				
+			 t.ORG_CODE orgCode,	  	  	 				
+			 t.PARENT_ID parentId	  	  	 				
+		from  BASE_ORGANIZATION t
+	</select>
+</sqlMap>
+

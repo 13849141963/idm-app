@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseUserDataSql">
+    <sql id="baseUserDataSql.getAllField">
+		select  user_base_id  , base_id, user_id
+	</sql>
+
+    <!-- 增加 -->
+    <insert id="baseUserDataSql.insert" parameterClass="com.fescotech.apps.idm.base.domain.BaseUserData">
+        <selectKey keyProperty="user_base_id" resultClass="java.lang.Long">
+            select seq_base_user_data.nextval as  user_base_id  from dual
+        </selectKey>
+        <![CDATA[
+		insert into base_user_data
+		(
+		user_base_id,
+		base_id,
+		user_id
+		)
+		values
+		( #user_base_id:NUMERIC#,
+            #base_id:NUMERIC#,
+            #user_id:NUMERIC#
+		)
+		]]>
+    </insert>
+
+
+    <insert id="baseUserDataSql.insertList" parameterClass="java.util.List">
+        insert into base_user_data(user_base_id,base_id,user_id
+        )
+        select seq_base_user_data.nextval as  user_base_id, t.* from (
+        <iterate conjunction=" union all " >
+            select
+            #list[].base_id#,
+            #list[].user_id#
+            from dual
+        </iterate>
+        ) t
+    </insert>
+
+
+
+
+
+
+
+    <!--根据主键删除-->
+    <delete id="baseUserDataSql.deleteBatch">
+        delete from base_user_data where user_base_id in
+        <iterate close=")" open="(" conjunction=",">
+            <![CDATA[#[]#]]>
+        </iterate>
+    </delete>
+
+
+    <!--修改-->
+    <update id="baseUserDataSql.update" parameterClass="com.fescotech.apps.idm.base.domain.BaseUserData">
+        <![CDATA[
+		update  base_user_data
+		set
+			user_base_id =  #user_base_id:NUMERIC#,
+			base_id =  #base_id:NUMERIC#,
+			user_id =  #user_id:NUMERIC#
+		    where user_base_id =  #user_base_id:NUMERIC#
+		]]>
+    </update>
+
+    <!--查询所有-->
+    <select id="baseUserDataSql.queryList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseUserData">
+        <include refid="baseUserDataSql.getAllField"/>
+        from ( select s.*,rowNum NUM from base_user_data s
+        where rowNum &lt;= #end#
+        <isNotEmpty property="user_base_id">
+            order by $user_base_id$
+        </isNotEmpty>
+        ) t
+        where
+        t.NUM &gt;#start#
+    </select>
+
+    <select id="baseUserDataSql.queryTotal"    resultClass="int">
+        select count(*) from base_user_data where 1=1
+    </select>
+
+
+    <select id="baseUserDataSql.queryByUserData"  parameterClass="com.fescotech.apps.idm.base.domain.BaseUserData" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseUserDataVo">
+        SELECT
+          b_u.user_id AS userId, b_u.login_name AS loginName, b_u.user_status AS userStatus, b_u.user_number AS userNumber, b_u.user_type AS userType
+        , b_u.org_id AS orgId, b_d.data_id AS dataId, b_d.data_name AS dataName, b_d.data_type AS dataType, b_d.data_create_time AS dataCreateTime
+        , b_u_a.user_base_id AS user_base_id, b_u_a.base_id AS base_id, b_u_a.user_id AS user_id
+        FROM
+          base_user b_u
+        LEFT JOIN base_user_data b_u_a ON b_u.user_id = b_u_a.user_id
+        RIGHT JOIN base_data b_d ON b_u_a.base_id = b_d.data_id
+        WHERE 1 = 1
+        <isNotEmpty prepend="AND" property="user_base_id">
+            b_u_a.user_base_id = #user_base_id#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="base_id">
+            b_u_a.base_id = #base_id#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="user_id">
+            b_u_a.user_id = #user_id#
+        </isNotEmpty>
+    </select>
+
+    <!--模糊查询-->
+    <select id="baseUserDataSql.queryByUserDataCount" parameterClass="com.fescotech.apps.idm.base.domain.BaseUserData" resultClass="int">
+        SELECT
+          count(*)
+        FROM
+        base_user b_u
+        LEFT JOIN base_user_data b_u_a ON b_u.user_id = b_u_a.user_id
+        RIGHT JOIN base_data b_d ON b_u_a.base_id = b_d.data_id
+        WHERE 1 = 1
+        <isNotEmpty prepend="AND" property="user_base_id">
+            b_u_a.user_base_id = #user_base_id#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="base_id">
+            b_u_a.base_id = #base_id#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="user_id">
+            b_u_a.user_id = #user_id#
+        </isNotEmpty>
+    </select>
+
+
+   <!-- &lt;!&ndash;模糊查询&ndash;&gt;
+    <select id="baseUserDataSql.queryDataByName" parameterClass="com.fescotech.apps.idm.base.domain.BaseUserData" resultClass="com.fescotech.apps.idm.base.domain.BaseUserData">
+        <include refid="baseUserDataSql.getAllField"/>
+        where 1=1
+        <isNotEmpty prepend="AND" property="dataName">
+            data_name like  concat(concat('%', #dataName#), '%')
+        </isNotEmpty>
+    </select>-->
+
+
+
+    <!---->
+    <!--<select id="baseDataSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <include refid="baseDataSql.getAllField"/>
+        where data_id =  #dataId#
+    </select>-->
+
+    <!--&lt;!&ndash; 根据主键查询 &ndash;&gt;
+    <select id="baseDataSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <include refid="baseDataSql.getAllField"/>
+        where data_id =  #dataId#
+    </select>
+
+    &lt;!&ndash; 根据主键删除 &ndash;&gt;
+    <delete id="baseDataSql.deleteBatch">
+        delete from base_data where data_id in
+        <iterate close=")" open="(" conjunction=",">
+            <![CDATA[#[]#]]>
+        </iterate>
+    </delete>
+
+    <select id="baseDataSql.queryList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        select
+               t.DATA_ID dataId, DATA_NAME dataName, DATA_TYPE dataType, DATA_CREATE_TIME dataCreateTime
+        from ( select s.*,rowNum NUM from base_data s
+        where rowNum &lt;= #end#
+
+        <isNotEmpty property="dataId">
+            order by $dataId$
+        </isNotEmpty>
+        ) t
+        where
+        t.NUM &gt;#start#
+    </select>
+
+    <select id="baseDataSql.queryTotal"    resultClass="int">
+        select count(*) from base_data where 1=1
+    </select>
+
+    <update id="baseDataSql.update" parameterClass="com.fescotech.apps.idm.base.domain.BaseData">
+		<![CDATA[
+		update  base_data
+		set
+			set
+			data_name =  #dataName:VARCHAR#,
+			data_type =  #dataType:VARCHAR#
+		    where data_id =  #dataId:NUMERIC#
+		]]>
+	</update>
+
+    <select id="baseDataSql.queryDataByName" parameterClass="com.fescotech.apps.idm.base.domain.BaseData" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <include refid="baseDataSql.getAllField"/>
+        where 1=1
+        <isNotEmpty prepend="AND" property="dataName">
+            data_name like  concat(concat('%', #dataName#), '%')
+        </isNotEmpty>
+    </select>
+
+
+    <select id="baseDataSql.queryByData"  parameterClass="com.fescotech.apps.idm.base.domain.BaseData" resultClass="com.fescotech.apps.idm.base.domain.BaseData">
+        <include refid="baseDataSql.getAllField"/>
+        where 1=1
+        <isNotEqual prepend="AND" property="dataId" compareValue="0">
+            DATA_ID = #dataId#
+        </isNotEqual>
+        <isNotEmpty prepend="AND" property="dataName">
+            DATA_NAME =  #dataName#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="dataType">
+            DATA_TYPE =  #dataType#
+        </isNotEmpty>
+    </select>-->
+
+
+
+
+
+
+
+</sqlMap>

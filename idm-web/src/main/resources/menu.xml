@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<menu-root id="menu-root">
+	<menu icon="fa fa-cog" menuId="1" name="系统管理" type="0" url="" perms="sys:manage">
+		<menu icon="fa fa-user" menuId="2" name="管理员列表" type="1" url="sys/user.html" perms="sys:user"/>
+		<menu icon="fa fa-user-secret" menuId="3" name="角色管理" type="1" url="sys/role.html" perms="sys:role"/>
+		<menu icon="fa fa-th-list" menuId="4" name="菜单管理" type="1" url="sys/menu.html" perms="sys:menu"/>
+		<menu icon="fa fa-object-group" menuId="5" name="系统日志" type="1" url="base/log.html" perms="base:log"/>
+		<menu icon="fa fa-object-ungroup" menuId="6" name="接口日志" type="1" url="base/apiLog.html" perms="api:log"/>
+		<!--<menu icon="fa fa-bug" menuId="5" name="SQL监控" type="1" url="druid/sql.html"/>
+		<menu icon="fa fa-tasks" menuId="6" name="定时任务" type="1" url="sys/schedule.html"/>
+		<menu icon="fa fa-sun-o" menuId="7" name="参数管理" type="1" url="sys/config.html"/>
+		<menu icon="fa fa-rocket" menuId="8" name="代码生成器" type="1" url="sys/generator.html"/>  -->
+	</menu> 
+	<menu icon="fa fa-users" menuId="10" name="用户管理" type="0" url="" perms="user:manage">
+		<menu icon="fa fa-cog" menuId="13" name="公司管理" type="1" url="base/corp.html" perms="base:corp"/>
+		<menu icon="fa fa-institution" menuId="11" name="机构管理" type="1" url="base/org.html" perms="base:org"/>
+		<menu icon="fa fa-user" menuId="12" name="用户管理" type="1" url="base/baseUser.html" perms="base:user"/>
+	</menu>
+	<menu icon="fa fa-key" menuId="20" name="权限管理" type="0" url="" perms="auth:manage">
+		<menu icon="fa fa-rocket" menuId="21" name="应用管理" type="1" url="base/baseSys.html" perms="base:sys"/>
+		<menu icon="fa fa-user-secret" menuId="22" name="角色管理" type="1" url="base/role.html" perms="base:role"/>
+		<menu icon="fa fa-toggle-on" menuId="23" name="权限管理" type="1" url="base/function.html" perms="base:function"/>
+		<menu icon="fa fa-database" menuId="24" name="数据权限集管理" type="1" url="base/baseData.html" perms="base:data"/>
+	</menu>
+</menu-root>

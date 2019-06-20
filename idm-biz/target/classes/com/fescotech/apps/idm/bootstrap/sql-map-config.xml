@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+ 	<!-- 开启命名空间，sql的ID可以不用带前缀 -->
+  	<settings useStatementNamespaces="true"  cacheModelsEnabled="true"   enhancementEnabled="true"  lazyLoadingEnabled="true"   maxSessions="3000"  maxTransactions="3000"   maxRequests="3000"/>
+	<!-- <sqlMap resource="com/fescotech/common/schedule/biz/dao/sql/schedule.xml" />
+	<sqlMap resource="com/fescotech/common/ws/biz/dao/sql/wsrequest-sql.xml" /> -->
+	<sqlMap resource="com/fescotech/apps/idm/admin/biz/dao/sql/SysConfigSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/admin/biz/dao/sql/SysUserRoleSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/admin/biz/dao/sql/SysMenuSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/admin/biz/dao/sql/SysRoleMenuSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/admin/biz/dao/sql/SysRoleSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/admin/biz/dao/sql/SysUserSql.xml" />
+
+	
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseSysSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseOrganizationSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseCorpinfoSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseUserSql.xml" />
+    <sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseDataSql.xml" />
+    <sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseUserDataSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseDataCustomerSql.xml" />
+
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseRoleSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseFunctionSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseRoleFunctionSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseDictSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseUserRoleSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/BaseLogSql.xml" />
+	<sqlMap resource="com/fescotech/apps/idm/base/biz/dao/sql/ApiLogSql.xml" />
+</sqlMapConfig>

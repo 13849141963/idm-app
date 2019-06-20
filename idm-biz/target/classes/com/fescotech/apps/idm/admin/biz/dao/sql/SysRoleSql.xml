@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysRoleSql">
+	<sql id="sysRoleSql.getAllField">
+		select 
+		 t.role_id roleId,	  	  	 				
+		 t.remark remark,	  	  	 				
+		 t.create_time createTime,	  	  	 				
+		 t.role_name roleName	  	  	 				
+		from  sys_role t
+	</sql>
+    <insert id="sysRoleSql.insert" parameterClass="com.fescotech.apps.idm.admin.domain.SysRole">
+    	<selectKey resultClass="Long" keyProperty="roleId">
+    		select SEQ_SYS_ROLE.nextval as  roleId  from dual
+    	</selectKey>
+		<![CDATA[   
+		insert into sys_role
+		(role_id,
+		remark,				
+		create_time,				
+		role_name				
+		)
+		values
+		(  #roleId:NUMERIC#,
+		   #remark:VARCHAR#,
+		   #createTime:TIMESTAMP#,
+		   #roleName:VARCHAR#
+		)
+		]]>		
+	</insert>
+	
+	<update id="sysRoleSql.update" parameterClass="com.fescotech.apps.idm.admin.domain.SysRole">
+		<![CDATA[   
+		update
+		  sys_role
+		set
+			remark =  #remark:VARCHAR#,
+			create_time =  #createTime:TIMESTAMP#,
+			role_name =  #roleName:VARCHAR#
+		where 
+		role_id =  #roleId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="sysRoleSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.admin.domain.vo.SysRoleVo">
+		<include refid="sysRoleSql.getAllField"/>
+		where 
+		role_id =  #value#
+	</select>
+	<select id="sysRoleSql.querySysRole"  parameterClass="com.fescotech.apps.idm.admin.domain.SysRole" resultClass="com.fescotech.apps.idm.admin.domain.SysRole">
+		<include refid="sysRoleSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="roleId">  
+        	role_id =  #roleId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	remark =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="createTime">  
+        	create_time =  #createTime#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="roleName">  
+        	role_name =  #roleName#
+        </isNotEmpty>   
+	</select>
+	
+	<delete id="sysRoleSql.deleteRole">
+		delete from sys_role where role_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+
+	<delete id="sysRoleSql.deleteSysRole">
+		delete from sys_role_menu where role_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+
+	<delete id="sysRoleSql.deleteUserRole">
+		delete from sys_user_role where role_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+	
+	<select id="sysRoleSql.queryTotal" resultClass="int">
+		select count(*) from sys_role
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="roleId">  
+        	role_id =  #roleId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	remark =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="createTime">  
+        	create_time =  #createTime#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="roleName">  
+        	role_name =  #roleName#
+        </isNotEmpty>
+	</select>
+	<select id="sysRoleSql.queryList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.admin.domain.SysRole">
+		select 
+		 t.role_id roleId,	  	  	 				
+		 t.remark remark,	  	  	 				
+		 t.create_time createTime,	  	  	 				
+		 t.role_name roleName	  	  	 				
+		 from ( select s.*,rownum NUM from sys_role s 
+		where rownum &lt;= #end# 
+	  	<isNotEmpty prepend="AND" property="roleId">  
+        	role_id =  #roleId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	remark =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="createTime">  
+        	create_time =  #createTime#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="roleName">  
+        	role_name =  #roleName#
+        </isNotEmpty>
+        order by  role_id asc 
+        ) t 
+        where 
+        t.NUM &gt; #start#
+                
+	</select>
+	
+	<select id="sysRoleSql.queryAllList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.admin.domain.SysRole">
+		<include refid="sysRoleSql.getAllField"/>
+	</select>	
+</sqlMap>
+

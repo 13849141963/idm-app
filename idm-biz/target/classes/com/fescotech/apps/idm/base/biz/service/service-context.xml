@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="baseCorpinfoServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseCorpinfoService">
+		<property name="baseCorpinfoBo" ref="baseCorpinfoBo"></property>	
+	</bean>	
+	<bean id="baseCorpinfoService" parent="baseTransactionProxy">
+        <property name="target" ref="baseCorpinfoServiceTarget" />
+    </bean>
+    
+    <bean id="baseOrganizationServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseOrganizationService">
+		<property name="baseOrganizationBo" ref="baseOrganizationBo"></property>	
+	</bean>	
+	<bean id="baseOrganizationService" parent="baseTransactionProxy">
+        <property name="target" ref="baseOrganizationServiceTarget" />
+    </bean>
+    
+    <bean id="baseUserServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseUserService">
+		<property name="baseUserBo" ref="baseUserBo"></property>	
+	</bean>	
+	<bean id="baseUserService" parent="baseTransactionProxy">
+        <property name="target" ref="baseUserServiceTarget" />
+    </bean>
+    
+     <bean id="baseSysServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseSysServiceImpl">
+		<property name="baseSysBo" ref="baseSysBo"></property>	
+	</bean>	
+	<bean id="baseSysService" parent="baseTransactionProxy">
+        <property name="target" ref="baseSysServiceTarget" />
+    </bean>
+
+    
+    <bean id="baseRoleServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseRoleService">
+		<property name="baseRoleBo" ref="baseRoleBo"></property>
+		<property name="baseRoleFunctionBo" ref="baseRoleFunctionBo"></property>
+		<property name="baseDictBo" ref="baseDictBo"></property>
+	</bean>	
+	<bean id="baseRoleService" parent="baseTransactionProxy">
+        <property name="target" ref="baseRoleServiceTarget" />
+    </bean>
+    
+    <bean id="baseFunctionServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseFunctionService">
+		<property name="baseFunctionBo" ref="baseFunctionBo"></property>
+		<property name="baseRoleFunctionBo" ref="baseRoleFunctionBo"></property>
+	</bean>	
+	<bean id="baseFunctionService" parent="baseTransactionProxy">
+        <property name="target" ref="baseFunctionServiceTarget" />
+    </bean>
+
+	<bean id="baseRoleFunctionServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseRoleFunctionService">
+		<property name="baseRoleFunctionBo" ref="baseRoleFunctionBo"></property>
+	</bean>	
+	<bean id="baseRoleFunctionService" parent="baseTransactionProxy">
+        <property name="target" ref="baseRoleFunctionServiceTarget" />
+    </bean>
+
+
+ 	<bean id="baseDictServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseDictService">
+		<property name="baseDictBo" ref="baseDictBo"></property>
+	</bean>	
+	<bean id="baseDictService" parent="baseTransactionProxy">
+        <property name="target" ref="baseDictServiceTarget" />
+    </bean>
+    
+    
+ 	<bean id="baseUserRoleServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseUserRoleServiceImpl">
+		<property name="baseUserRoleBo" ref="baseUserRoleBo"></property>
+	</bean>	
+	<bean id="baseUserRoleService" parent="baseTransactionProxy">
+        <property name="target" ref="baseUserRoleServiceTarget" />
+    </bean>
+    
+    <bean id="baseLogServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseLogService">
+		<property name="baseLogBo" ref="baseLogBo"></property>
+	</bean>	
+	<bean id="baseLogService" parent="baseTransactionProxy">
+        <property name="target" ref="baseLogServiceTarget" />
+    </bean>
+    
+    <bean id="apiLogServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.ApiLogService">
+		<property name="apiLogBo" ref="apiLogBo"></property>
+	</bean>	
+	<bean id="apiLogService" parent="baseTransactionProxy">
+        <property name="target" ref="apiLogServiceTarget" />
+    </bean>
+
+	<bean id="baseDataServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseDataService">
+		<property name="baseDataBo" ref="baseDataBo"></property>
+	</bean>
+	<bean id="baseDataService" parent="baseTransactionProxy">
+		<property name="target" ref="baseDataServiceTarget" />
+	</bean>
+	
+	<bean id="baseDataCustomerServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseDataCustomerService">
+		<property name="baseDataCustomerBo" ref="baseDataCustomerBo"></property>
+	</bean>
+	<bean id="baseDataCustomerService" parent="baseTransactionProxy">
+		<property name="target" ref="baseDataCustomerServiceTarget" />
+	</bean>
+
+
+	<bean id="baseUserDataServiceTarget" class="com.fescotech.apps.idm.base.biz.service.impl.BaseUserDataService">
+		<property name="baseUserDataBo" ref="baseUserDataBo"></property>
+	</bean>
+	<bean id="baseUserDataService" parent="baseTransactionProxy">
+		<property name="target" ref="baseUserDataServiceTarget" />
+	</bean>
+
+
+
+</beans>

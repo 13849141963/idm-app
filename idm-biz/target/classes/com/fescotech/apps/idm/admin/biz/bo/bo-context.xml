@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="sysMenuBo" class="com.fescotech.apps.idm.admin.biz.bo.impl.SysMenuBo" parent="abstractBoT"></bean>
+	<bean id="sysRoleBo" class="com.fescotech.apps.idm.admin.biz.bo.impl.SysRoleBo" parent="abstractBoT"></bean>
+	<bean id="sysRoleMenuBo" class="com.fescotech.apps.idm.admin.biz.bo.impl.SysRoleMenuBo" parent="abstractBoT"></bean>
+	<bean id="sysUserBo" class="com.fescotech.apps.idm.admin.biz.bo.impl.SysUserBo" parent="abstractBoT"></bean>
+	<bean id="sysUserRoleBo" class="com.fescotech.apps.idm.admin.biz.bo.impl.SysUserRoleBo" parent="abstractBoT"></bean> 
+	<bean id="sysConfigBo" class="com.fescotech.apps.idm.admin.biz.bo.impl.SysConfigBo" parent="abstractBoT"></bean>
+	
+
+</beans>

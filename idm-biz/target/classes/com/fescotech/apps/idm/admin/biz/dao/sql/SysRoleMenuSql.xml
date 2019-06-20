@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysRoleMenuSql">
+	<sql id="sysRoleMenuSql.getAllField">
+		select 
+		 t.role_menu_id roleMenuId,	  	  	 				
+		 t.menu_id menuId,	  	  	 				
+		 t.role_id roleId	  	  	 				
+		from  sys_role_menu t
+	</sql>
+    <insert id="sysRoleMenuSql.insert" parameterClass="com.fescotech.apps.idm.admin.domain.SysRoleMenu">
+    	<selectKey resultClass="java.lang.Long" keyProperty="roleMenuId">
+    		select SEQ_SYS_ROLE_MENU.NEXTVAL   from dual
+    	</selectKey>
+		<![CDATA[   
+		insert into sys_role_menu
+		(role_menu_id,
+		menu_id,				
+		role_id				
+		)
+		values
+		(  #roleMenuId:NUMERIC#,
+		   #menuId:NUMERIC#,
+		   #roleId:NUMERIC#
+		)
+		]]>
+		<selectKey keyProperty="roleMenuId" resultClass="java.lang.Long">
+      	  SELECT @@IDENTITY as roleMenuId FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<update id="sysRoleMenuSql.update" parameterClass="com.fescotech.apps.idm.admin.domain.SysRoleMenu">
+		<![CDATA[   
+		update
+		  sys_role_menu
+		set
+			menu_id =  #menuId:NUMERIC#,
+			role_id =  #roleId:NUMERIC#
+		where 
+		    role_menu_id =  #roleMenuId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="sysRoleMenuSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.admin.domain.SysRoleMenu">
+		<include refid="sysRoleMenuSql.getAllField"/>
+		where 
+		role_menu_id =  #value#
+	</select>
+	<select id="sysRoleMenuSql.querySysRoleMenu"  parameterClass="com.fescotech.apps.idm.admin.domain.SysRoleMenu" resultClass="com.fescotech.apps.idm.admin.domain.SysRoleMenu">
+		<include refid="sysRoleMenuSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="roleMenuId">  
+        	role_menu_id =  #roleMenuId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="menuId">  
+        	menu_id =  #menuId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="roleId">  
+        	role_id =  #roleId#
+        </isNotEmpty>   
+	</select>
+	<delete id="sysRoleMenuSql.deleteByRoleId" >
+		delete from sys_role_menu where role_id = #value#
+	</delete>
+	
+	<select id="sysRoleMenuSql.queryMenuIdList"  parameterClass="java.lang.Long" resultClass="java.lang.Long">
+		select menu_id from sys_role_menu  	where   role_id =  #value# 
+	</select>
+	
+</sqlMap>
+

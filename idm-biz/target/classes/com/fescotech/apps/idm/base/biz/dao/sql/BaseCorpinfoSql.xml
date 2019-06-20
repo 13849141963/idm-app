@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseCorpinfoSql">
+	<sql id="baseCorpinfo">
+		 t.CORP_ID corpId,	  	  	 				
+		 t.PARENT_ID parentId,	  	  	 				
+		 t.DISPLAY_ORDER displayOrder,	  	  	 				
+		 t.CORP_LEVEL corpLevel,	  	  	 				
+		 t.COMPANY_NAME companyName,	  	  	 				
+		 t.SHORT_NAME shortName,	  	  	 				
+		 t.DESCRIPTION description,	  	  	 				
+		 t.IS_LEAF isLeaf,	  	  	 				
+		 t.CORP_AREA corpArea,	  	  	 				
+		 t.CORP_STATE corpState,	  	  	 				
+		 t.CORP_TYPE corpType,	  	  	 				
+		 t.IS_HAVE_SUPP isHaveSupp,	  	  	 				
+		 t.IS_SUPP_INTERFACE isSuppInterface,	  	  	 				
+		 t.SYSTEM_USAGE systemUsage,	  	  	 				
+		 t.OFFICE_ADDR officeAddr,	  	  	 				
+		 t.POST_CODE postCode,	  	  	 				
+		 t.WEBSITE website,	  	  	 				
+		 t.OPERATOR operator,	  	  	 				
+		 t.OPER_TIME operTime,	  	  	 				
+		 t.IS_ROOT isRoot,	  	  	 				
+		 t.SUPP_ID suppId	  	  	 				
+	</sql>
+
+    <insert id="insertBaseCorpinfo" parameterClass="com.fescotech.apps.idm.base.domain.BaseCorpinfo">
+			<selectKey keyProperty="corpId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_CORPINFO.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_CORPINFO
+		(
+		CORP_ID,				
+		PARENT_ID,				
+		DISPLAY_ORDER,				
+		CORP_LEVEL,				
+		COMPANY_NAME,				
+		SHORT_NAME,				
+		DESCRIPTION,				
+		IS_LEAF,				
+		CORP_AREA,				
+		CORP_STATE,				
+		CORP_TYPE,				
+		IS_HAVE_SUPP,				
+		IS_SUPP_INTERFACE,				
+		SYSTEM_USAGE,				
+		OFFICE_ADDR,				
+		POST_CODE,				
+		WEBSITE,				
+		OPERATOR,				
+		OPER_TIME,				
+		IS_ROOT,				
+		SUPP_ID				
+		)
+		values
+		(
+		   #corpId:NUMERIC#,
+		   #parentId:NUMERIC#,
+		   #displayOrder:NUMERIC#,
+		   #corpLevel:NUMERIC#,
+		   #companyName:VARCHAR#,
+		   #shortName:VARCHAR#,
+		   #description:VARCHAR#,
+		   #isLeaf:NUMERIC#,
+		   #corpArea:VARCHAR#,
+		   #corpState:NUMERIC#,
+		   #corpType:NUMERIC#,
+		   #isHaveSupp:NUMERIC#,
+		   #isSuppInterface:NUMERIC#,
+		   #systemUsage:NUMERIC#,
+		   #officeAddr:VARCHAR#,
+		   #postCode:VARCHAR#,
+		   #website:VARCHAR#,
+		   #operator:NUMERIC#,
+		   #operTime:TIMESTAMP#,
+		   #isRoot:NUMERIC#,
+		   #suppId:NUMERIC#
+		)
+		]]>
+		<selectKey keyProperty="corpId" resultClass="java.lang.Long">
+      	  SELECT @@IDENTITY as corpId FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<update id="updateBaseCorpinfo" parameterClass="com.fescotech.apps.idm.base.domain.BaseCorpinfo">
+		<![CDATA[   
+		update
+		  BASE_CORPINFO
+		set
+			PARENT_ID =  #parentId:NUMERIC#,
+			DISPLAY_ORDER =  #displayOrder:NUMERIC#,
+			CORP_LEVEL =  #corpLevel:NUMERIC#,
+			COMPANY_NAME =  #companyName:VARCHAR#,
+			SHORT_NAME =  #shortName:VARCHAR#,
+			DESCRIPTION =  #description:VARCHAR#,
+			IS_LEAF =  #isLeaf:NUMERIC#,
+			CORP_AREA =  #corpArea:VARCHAR#,
+			CORP_STATE =  #corpState:NUMERIC#,
+			CORP_TYPE =  #corpType:NUMERIC#,
+			IS_HAVE_SUPP =  #isHaveSupp:NUMERIC#,
+			IS_SUPP_INTERFACE =  #isSuppInterface:NUMERIC#,
+			SYSTEM_USAGE =  #systemUsage:NUMERIC#,
+			OFFICE_ADDR =  #officeAddr:VARCHAR#,
+			POST_CODE =  #postCode:VARCHAR#,
+			WEBSITE =  #website:VARCHAR#,
+			OPERATOR =  #operator:NUMERIC#,
+			OPER_TIME =  #operTime:TIMESTAMP#,
+			IS_ROOT =  #isRoot:NUMERIC#,
+			SUPP_ID =  #suppId:NUMERIC#
+		where 
+		CORP_ID =  #corpId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="loadBaseCorpinfoByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseCorpinfo">
+		select 
+		<include refid="baseCorpinfoSql.baseCorpinfo" /> 
+		from  BASE_CORPINFO t
+		where 
+		CORP_ID =  #value#
+	</select>
+	<select id="queryBaseCorpinfoByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseCorpinfo">
+		select 
+		corp.company_name as parentName,
+		<include refid="baseCorpinfoSql.baseCorpinfo" /> 
+		from  BASE_CORPINFO t 
+		left join  BASE_CORPINFO corp 
+		on t.PARENT_ID = corp.CORP_ID
+		where t.CORP_ID =  #value#
+	</select>
+	
+	<select id="queryBaseCorpinfo"  parameterClass="com.fescotech.apps.idm.base.domain.BaseCorpinfo" resultClass="com.fescotech.apps.idm.base.domain.BaseCorpinfo">
+		select 
+		<include refid="baseCorpinfoSql.baseCorpinfo" /> 
+		from  BASE_CORPINFO t
+		where 1=1
+		<isNotEmpty prepend="AND" property="corpId">
+			 CORP_ID =  #corpId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+			 PARENT_ID =  #parentId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="displayOrder">
+			 DISPLAY_ORDER =  #displayOrder:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpLevel">
+			 CORP_LEVEL =  #corpLevel:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="companyName">
+			 COMPANY_NAME =  #companyName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="shortName">
+			 SHORT_NAME =  #shortName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="description">
+			 DESCRIPTION =  #description:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isLeaf">
+			 IS_LEAF =  #isLeaf:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpArea">
+			 CORP_AREA =  #corpArea:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpState">
+			 CORP_STATE =  #corpState:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpType">
+			 CORP_TYPE =  #corpType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isHaveSupp">
+			 IS_HAVE_SUPP =  #isHaveSupp:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isSuppInterface">
+			 IS_SUPP_INTERFACE =  #isSuppInterface:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="systemUsage">
+			 SYSTEM_USAGE =  #systemUsage:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="officeAddr">
+			 OFFICE_ADDR =  #officeAddr:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="postCode">
+			 POST_CODE =  #postCode:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="website">
+			 WEBSITE =  #website:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator">
+			 OPERATOR =  #operator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isRoot">
+			 IS_ROOT =  #isRoot:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="suppId">
+			 SUPP_ID =  #suppId:NUMERIC#
+		</isNotEmpty>
+	</select>
+	<select id="queryBaseCorpinfoCount"  parameterClass="com.fescotech.apps.idm.base.domain.BaseCorpinfo" resultClass="int">
+		select count(*)
+		from  BASE_CORPINFO t
+		where 1=1
+		<isNotEmpty prepend="AND" property="corpId">
+			 CORP_ID =  #corpId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+			 PARENT_ID =  #parentId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="displayOrder">
+			 DISPLAY_ORDER =  #displayOrder:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpLevel">
+			 CORP_LEVEL =  #corpLevel:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="companyName">
+			 COMPANY_NAME =  #companyName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="shortName">
+			 SHORT_NAME =  #shortName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="description">
+			 DESCRIPTION =  #description:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isLeaf">
+			 IS_LEAF =  #isLeaf:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpArea">
+			 CORP_AREA =  #corpArea:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpState">
+			 CORP_STATE =  #corpState:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpType">
+			 CORP_TYPE =  #corpType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isHaveSupp">
+			 IS_HAVE_SUPP =  #isHaveSupp:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isSuppInterface">
+			 IS_SUPP_INTERFACE =  #isSuppInterface:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="systemUsage">
+			 SYSTEM_USAGE =  #systemUsage:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="officeAddr">
+			 OFFICE_ADDR =  #officeAddr:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="postCode">
+			 POST_CODE =  #postCode:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="website">
+			 WEBSITE =  #website:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator">
+			 OPERATOR =  #operator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isRoot">
+			 IS_ROOT =  #isRoot:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="suppId">
+			 SUPP_ID =  #suppId:NUMERIC#
+		</isNotEmpty>
+	</select>
+	
+	<select id="baseCorpinfoSql.queryTreeList" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseCorpinfoVo">
+		select 
+		<include refid="baseCorpinfoSql.baseCorpinfo" /> 
+		from  BASE_CORPINFO t
+	</select>
+	
+	<select id="baseCorpinfoSql.queryList" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseCorpinfoVo">
+		select 
+parentName,
+corpId,
+parentId,
+displayOrder,
+corpLevel,
+companyName,
+shortName,
+description,
+isLeaf,
+corpArea,
+corpState,
+corpType,
+isHaveSupp,
+isSuppInterface,
+systemUsage,
+officeAddr,
+postCode,
+website,
+operator,
+operTime,
+isRoot,
+suppId from
+(select v.*, rownum rn
+          from
+    (select corp.company_name   as parentName,
+           t.CORP_ID           corpId,
+           t.PARENT_ID         parentId,
+           t.DISPLAY_ORDER     displayOrder,
+           t.CORP_LEVEL        corpLevel,
+           t.COMPANY_NAME      companyName,
+           t.SHORT_NAME        shortName,
+           t.DESCRIPTION       description,
+           t.IS_LEAF           isLeaf,
+           t.CORP_AREA         corpArea,
+           t.CORP_STATE        corpState,
+           t.CORP_TYPE         corpType,
+           t.IS_HAVE_SUPP      isHaveSupp,
+           t.IS_SUPP_INTERFACE isSuppInterface,
+           t.SYSTEM_USAGE      systemUsage,
+           t.OFFICE_ADDR       officeAddr,
+           t.POST_CODE         postCode,
+           t.WEBSITE           website,
+           t.OPERATOR          operator,
+           t.OPER_TIME         operTime,
+           t.IS_ROOT           isRoot,
+           t.SUPP_ID           suppId
+      from BASE_CORPINFO t
+      left join BASE_CORPINFO corp on t.PARENT_ID = corp.CORP_ID
+      where 1 = 1
+	  <isNotEmpty prepend="AND" property="corpId">
+			t.CORP_ID =  #corpId#
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="corpId">
+			t.PARENT_ID =  #corpId#
+		</isNotEmpty>
+		<isEmpty property="orderBy">
+		   order by t.corp_id asc
+		</isEmpty>
+		<isNotEmpty property="orderBy">
+			order by $orderBy$ $orderFlag$
+		</isNotEmpty>
+     ) v ) b
+     where b.rn between #start# and #end# 
+	</select>
+	
+	<select id="baseCorpinfoSql.queryTotal"  resultClass="int">
+		select count(*) from BASE_CORPINFO 
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="corpId">  
+        	CORP_ID =  #corpId#
+        </isNotEmpty>
+        <isNotEmpty prepend="OR" property="corpId">  
+        	PARENT_ID =  #corpId#
+        </isNotEmpty>
+	</select>	
+	
+	<delete id="deleteBatch">
+		delete from BASE_CORPINFO where corp_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>		 
+	</delete>
+</sqlMap>
+

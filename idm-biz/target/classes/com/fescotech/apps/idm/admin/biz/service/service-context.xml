@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="sysUserServiceTarget" class="com.fescotech.apps.idm.admin.biz.service.impl.SysUserServiceImpl">
+		<property name="sysUserBo" ref="sysUserBo"></property>
+		<property name="sysUserRoleBo" ref="sysUserRoleBo"></property>		
+	</bean>
+	<bean id="sysUserService" parent="baseTransactionProxy">
+        <property name="target" ref="sysUserServiceTarget" />
+        <property name="transactionAttributes">
+            <props>
+                <prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+            </props>
+        </property>
+    </bean>
+  <!--
+  <bean id="sysUserRoleServiceTarget" class="com.fescotech.apps.idm.admin.biz.service.impl.SysUserRoleServiceImpl">
+	 <property name="sysUserRoleBo" ref="sysUserRoleBo"></property>
+  </bean>  
+  <bean id="sysUserRoleService" parent="baseTransactionProxy">
+        <property name="target" ref="sysUserRoleServiceTarget" />
+        <property name="transactionAttributes">
+            <props>
+                <prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+            </props>
+        </property>
+   </bean>
+   -->
+    <bean id="sysMenuServiceTarget" class="com.fescotech.apps.idm.admin.biz.service.impl.SysMenuServiceImpl">
+		<property name="sysMenuBo" ref="sysMenuBo"></property>
+		<property name="sysUserBo" ref="sysUserBo"></property>		
+	</bean>	
+	<bean id="sysMenuService" parent="baseTransactionProxy">
+        <property name="target" ref="sysMenuServiceTarget" />
+    </bean>
+    
+    <bean id="sysConfigServiceTarget" class="com.fescotech.apps.idm.admin.biz.service.impl.SysConfigServiceImpl">
+		<property name="sysConfigBo" ref="sysConfigBo"></property>
+	</bean>	
+	<bean id="sysConfigService" parent="baseTransactionProxy">
+        <property name="target" ref="sysConfigServiceTarget" />
+    </bean>    
+        
+    <bean id="sysRoleServiceTarget" class="com.fescotech.apps.idm.admin.biz.service.impl.SysRoleServiceImpl">
+		<property name="sysRoleBo"     ref="sysRoleBo"></property>
+		<property name="sysRoleMenuBo" ref="sysRoleMenuBo"></property>
+	</bean>	
+	<bean id="sysRoleService" parent="baseTransactionProxy">
+        <property name="target" ref="sysRoleServiceTarget" />        
+    </bean>
+    <!-- <bean id="sysRoleMenuServiceTarget" class="com.fescotech.apps.idm.admin.biz.service.impl.SysRoleMenuServiceImpl">
+		<property name="sysRoleBo" ref="sysRoleBo"></property>
+		<property name="sysRoleMenuBo" ref="sysRoleMenuBo"></property>
+	</bean>	
+	<bean id="sysRoleMenuService" parent="baseTransactionProxy">
+        <property name="target" ref="sysRoleMenuServiceTarget" />        
+    </bean> -->
+    
+</beans>

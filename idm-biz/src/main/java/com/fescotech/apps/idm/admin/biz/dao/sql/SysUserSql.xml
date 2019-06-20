@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysUserSql">
+	<sql id="sysUserSql.getAllField">
+		select 
+		 t.username username,	  	  	 				
+		 t.status status,	  	  	 				
+		 t.email email,	  	  	 				
+		 t.create_time createTime,	  	  	 				
+		 t.user_id userId,	  	  	 				
+		 t.password password,
+		 t.sys_id sysId,
+		 t.mobile mobile	  	  	 				
+		 from  sys_user t
+	</sql>
+    <insert id="sysUserSql.insert" parameterClass="com.fescotech.apps.idm.admin.domain.SysUser">
+    	<selectKey resultClass="Long" keyProperty="userId">
+    		select SEQ_SYS_USER.nextval as  userId  from dual
+    	</selectKey>
+		<![CDATA[   
+		insert into sys_user
+		(user_id,
+		username,				
+		status,				
+		email,				
+		create_time,				
+		password,
+		sys_id,	
+		mobile				
+		)
+		values
+		(  #userId:NUMERIC#,
+		   #username:VARCHAR#,
+		   #status:NUMERIC#,
+		   #email:VARCHAR#,
+		   #createTime:TIMESTAMP#,
+		   #password:VARCHAR#,
+		   #sysId:VARCHAR#,
+		   #mobile:VARCHAR#
+		)
+		]]>
+
+	</insert>
+	
+	<update id="sysUserSql.update" parameterClass="com.fescotech.apps.idm.admin.domain.SysUser">
+		<![CDATA[   
+		update
+		  sys_user
+		set
+			username =  #username:VARCHAR#,
+			status =  #status:NUMERIC#,
+			email =  #email:VARCHAR#,
+			create_time =  #createTime:TIMESTAMP#,
+			password =  #password:VARCHAR#,
+			sys_id =  #sysId:VARCHAR#,
+			mobile =  #mobile:VARCHAR#
+		where 
+		user_id =  #userId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="sysUserSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.admin.domain.vo.SysUserVo">
+		<include refid="sysUserSql.getAllField"/> where 	user_id =  #value#
+	</select>
+	<select id="sysUserSql.querySysUser"  parameterClass="com.fescotech.apps.idm.admin.domain.SysUser" resultClass="com.fescotech.apps.idm.admin.domain.SysUser">
+		<include refid="sysUserSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="username">  
+        	username =  #username#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="status">  
+        	status =  #status#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="email">  
+        	email =  #email#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="createTime">  
+        	create_time =  #createTime#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="userId">  
+        	user_id =  #userId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="password">  
+        	password =  #password#
+        </isNotEmpty>   
+        <isNotEmpty prepend="AND" property="sysId">  
+        	sys_id =  #sysId#
+        </isNotEmpty>
+	 	<isNotEmpty prepend="AND" property="mobile">  
+        	mobile =  #mobile#
+        </isNotEmpty>   
+	</select>
+
+	<select id="sysUserSql.queryTotal"  parameterClass="java.util.HashMap"  resultClass="int">
+		select count(*) from sys_menu where 1=1 
+	 	<isNotEmpty prepend="AND" property="username">  
+        	username =  #username#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="status">  
+        	status =  #status#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="email">  
+        	email =  #email#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="createTime">  
+        	create_time =  #createTime#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="userId">  
+        	user_id =  #userId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="password">  
+        	password =  #password#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="mobile">  
+        	mobile =  #mobile#
+        </isNotEmpty>   
+        <isNotEmpty prepend="AND" property="sysId">  
+        	sys_id =  #sysId#
+        </isNotEmpty>   
+	</select>
+	<select id="sysUserSql.queryList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.admin.domain.SysUser">
+		select  t.username username,	  	  	 				
+		 t.status status,	  	  	 				
+		 t.email email,	  	  	 				
+		 t.create_time createTime,	  	  	 				
+		 t.user_id userId,	  	  	 				
+		 t.password password,
+		 t.sys_id sysId,
+		 t.mobile mobile from ( select s.*,rownum NUM from sys_user s 
+		where rownum &lt;= #end# 
+	 	<isNotEmpty prepend="AND" property="username">  
+        	username =  #username#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="status">  
+        	status =  #status#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="email">  
+        	email =  #email#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="createTime">  
+        	create_time =  #createTime#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="userId">  
+        	user_id =  #userId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="password">  
+        	password =  #password#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="mobile">  
+        	mobile =  #mobile#
+        </isNotEmpty>
+         <isNotEmpty prepend="AND" property="sysId">  
+        	sys_id =  #sysId#
+        </isNotEmpty>
+         order by  user_id desc 
+        ) t 
+        where 
+        t.NUM &gt;#start#
+	</select>
+	<select id="sysUserSql.queryByUserName" resultClass="com.fescotech.apps.idm.admin.domain.SysUser">
+		<include refid="sysUserSql.getAllField"/> where username = #username#
+	</select>
+	
+	<!-- 删除user -->
+	<delete id="sysUserSql.deleteUser">
+		delete from sys_user where user_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[
+                 #[]#
+            ]]>
+		</iterate>
+	</delete>
+	<!-- 删除用户角色表 -->
+	<delete id="sysUserSql.deleteUserRole">
+		delete from sys_user_role where user_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[
+                 #[]#
+            ]]>
+		</iterate>
+	</delete>
+	
+	<!-- 查询用户的所有权限 -->
+	<select id="sysUserSql.queryAllPerms"  parameterClass="java.lang.Long"  resultClass="java.lang.String">
+		select m.perms from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		where ur.user_id = #value#
+	</select>
+	
+	<!-- 查询用户的所有菜单ID --> 
+	<select id="sysUserSql.queryAllMenuId"  parameterClass="java.lang.Long"  resultClass="java.lang.Long">
+		select m.menu_id from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		where ur.user_id = #value#
+	</select>
+</sqlMap>
+

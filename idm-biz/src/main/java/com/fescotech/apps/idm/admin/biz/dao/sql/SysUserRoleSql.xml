@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysUserRoleSql">
+	<sql id="sysUserRoleSql.getAllField">
+		select 
+		 t.user_role_id userRoleId,	  	  	 				
+		 t.role_id roleId,	  	  	 				
+		 t.user_id userId	  	  	 				
+		from  sys_user_role t
+	</sql>
+    <insert id="sysUserRoleSql.insert" parameterClass="com.fescotech.apps.idm.admin.domain.SysUserRole">
+        <selectKey resultClass="Long" keyProperty="userRoleId">
+    		select SEQ_SYS_USER_ROLE.nextval as  userRoleId  from dual
+    	</selectKey>
+		<![CDATA[   
+		insert into sys_user_role
+		(user_role_id,
+		role_id,				
+		user_id				
+		)
+		values
+		(
+		   #userRoleId:NUMERIC#,
+		   #roleId:NUMERIC#,
+		   #userId:NUMERIC#
+		)
+		]]>
+	</insert>
+	
+	<update id="sysUserRoleSql.update" parameterClass="com.fescotech.apps.idm.admin.domain.SysUserRole">
+		<![CDATA[   
+		update
+		  sys_user_role
+		set
+			role_id =  #roleId:NUMERIC#,
+			user_id =  #userId:NUMERIC#
+		where 
+		  user_role_id =  #userRoleId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="sysUserRoleSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.admin.domain.SysUserRole">
+		<include refid="sysUserRoleSql.getAllField"/>
+		where 
+		 user_role_id =  #value#
+	</select>
+	<select id="sysUserRoleSql.querySysUserRole"  parameterClass="com.fescotech.apps.idm.admin.domain.SysUserRole" resultClass="com.fescotech.apps.idm.admin.domain.SysUserRole">
+		<include refid="sysUserRoleSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="userRoleId">  
+        	user_role_id =  #userRoleId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="roleId">  
+        	role_id =  #roleId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="userId">  
+        	user_id =  #userId#
+        </isNotEmpty>   
+	</select>	
+	
+	<delete id="sysUserRoleSql.deleteByUserId"  parameterClass="java.lang.Long">
+		delete from sys_user_role where user_id = #value#
+	</delete>
+	
+	<select id="sysUserRoleSql.queryRoleIdList"  parameterClass="java.lang.Long" resultClass="java.lang.Long">
+		select role_id from  sys_user_role where  user_id =  #value#	 	 
+	</select>
+</sqlMap>

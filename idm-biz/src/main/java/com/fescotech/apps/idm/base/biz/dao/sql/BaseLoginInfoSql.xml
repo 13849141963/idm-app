@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseLoginInfoSql">
+	<sql id="baseLoginInfo">
+		 t.LOGIN_INFO_ID loginInfoId,	  	  	 				
+		 t.USER_ID userId,	  	  	 				
+		 t.LOG_STATUS logStatus,	  	  	 				
+		 t.LOGIN_TIME loginTime,	  	  	 				
+		 t.CREATE_TIME createTime,	  	  	 				
+		 t.LOGOUT_TIME logoutTime,	  	  	 				
+		 t.USER_IP userIp,	  	  	 				
+		 t.USER_MAC userMac,	  	  	 				
+		 t.USER_COMPUTER userComputer,	  	  	 				
+		 t.USER_NAME userName,	  	  	 				
+		 t.LOGIN_NAME loginName	  	  	 				
+	</sql>
+
+    <insert id="insertBaseLoginInfo" parameterClass="com.fescotech.apps.idm.base.domain.BaseLoginInfo">
+			<selectKey keyProperty="loginInfoId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_LOGIN_INFO.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_LOGIN_INFO
+		(
+		LOGIN_INFO_ID,				
+		USER_ID,				
+		LOG_STATUS,				
+		LOGIN_TIME,				
+		CREATE_TIME,				
+		LOGOUT_TIME,				
+		USER_IP,				
+		USER_MAC,				
+		USER_COMPUTER,				
+		USER_NAME,				
+		LOGIN_NAME				
+		)
+		values
+		(
+		   #loginInfoId:NUMERIC#,
+		   #userId:NUMERIC#,
+		   #logStatus:NUMERIC#,
+		   #loginTime:TIMESTAMP#,
+		   #createTime:TIMESTAMP#,
+		   #logoutTime:TIMESTAMP#,
+		   #userIp:VARCHAR#,
+		   #userMac:VARCHAR#,
+		   #userComputer:VARCHAR#,
+		   #userName:VARCHAR#,
+		   #loginName:VARCHAR#
+		)
+		]]>
+		<selectKey keyProperty="loginInfoId" resultClass="java.lang.Long">
+      	  SELECT @@IDENTITY as loginInfoId FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<update id="updateBaseLoginInfo" parameterClass="com.fescotech.apps.idm.base.domain.BaseLoginInfo">
+		<![CDATA[   
+		update
+		  BASE_LOGIN_INFO
+		set
+			USER_ID =  #userId:NUMERIC#,
+			LOG_STATUS =  #logStatus:NUMERIC#,
+			LOGIN_TIME =  #loginTime:TIMESTAMP#,
+			CREATE_TIME =  #createTime:TIMESTAMP#,
+			LOGOUT_TIME =  #logoutTime:TIMESTAMP#,
+			USER_IP =  #userIp:VARCHAR#,
+			USER_MAC =  #userMac:VARCHAR#,
+			USER_COMPUTER =  #userComputer:VARCHAR#,
+			USER_NAME =  #userName:VARCHAR#,
+			LOGIN_NAME =  #loginName:VARCHAR#
+		where 
+		LOGIN_INFO_ID =  #loginInfoId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="loadBaseLoginInfoByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseLoginInfo">
+		select 
+		<include refid="baseLoginInfoSql.baseLoginInfo" /> 
+		from  BASE_LOGIN_INFO t
+		where 
+		LOGIN_INFO_ID =  #value#
+	</select>
+	
+	<select id="queryBaseLoginInfo"  parameterClass="com.fescotech.apps.idm.base.domain.BaseLoginInfo" resultClass="com.fescotech.apps.idm.base.domain.BaseLoginInfo">
+		select 
+		<include refid="baseLoginInfoSql.baseLoginInfo" /> 
+		from  BASE_LOGIN_INFO t
+		where 1=1
+		<isNotEmpty prepend="AND" property="loginInfoId">
+			 LOGIN_INFO_ID =  #loginInfoId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userId">
+			 USER_ID =  #userId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="logStatus">
+			 LOG_STATUS =  #logStatus:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="loginTime">
+			 LOGIN_TIME =  #loginTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createTime">
+			 CREATE_TIME =  #createTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="logoutTime">
+			 LOGOUT_TIME =  #logoutTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userIp">
+			 USER_IP =  #userIp:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userMac">
+			 USER_MAC =  #userMac:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userComputer">
+			 USER_COMPUTER =  #userComputer:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userName">
+			 USER_NAME =  #userName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="loginName">
+			 LOGIN_NAME =  #loginName:VARCHAR#
+		</isNotEmpty>
+	</select>
+	<select id="queryBaseLoginInfoCount"  parameterClass="com.fescotech.apps.idm.base.domain.BaseLoginInfo" resultClass="int">
+		select count(*)
+		from  BASE_LOGIN_INFO t
+		where 1=1
+		<isNotEmpty prepend="AND" property="loginInfoId">
+			 LOGIN_INFO_ID =  #loginInfoId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userId">
+			 USER_ID =  #userId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="logStatus">
+			 LOG_STATUS =  #logStatus:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="loginTime">
+			 LOGIN_TIME =  #loginTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createTime">
+			 CREATE_TIME =  #createTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="logoutTime">
+			 LOGOUT_TIME =  #logoutTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userIp">
+			 USER_IP =  #userIp:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userMac">
+			 USER_MAC =  #userMac:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userComputer">
+			 USER_COMPUTER =  #userComputer:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userName">
+			 USER_NAME =  #userName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="loginName">
+			 LOGIN_NAME =  #loginName:VARCHAR#
+		</isNotEmpty>
+	</select>
+</sqlMap>
+

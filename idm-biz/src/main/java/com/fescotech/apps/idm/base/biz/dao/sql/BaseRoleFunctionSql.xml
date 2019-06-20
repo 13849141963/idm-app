@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseRoleFunctionSql">
+	<sql id="baseRoleFunction">
+		 t.ROLE_ID roleId,	  	  	 				
+		 t.FUNCTION_ID functionId,	  	  	 				
+		 t.QUERY_RANGE queryRange,	  	  	 				
+		 t.QUERY_CORP queryCorp,	  	  	 				
+		 t.ROLE_FUNCTION_ID roleFunctionId	  	  	 				
+	</sql>
+
+    <insert id="insertBaseRoleFunction" parameterClass="com.fescotech.apps.idm.base.domain.BaseRoleFunction">
+			<selectKey keyProperty="roleId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_ROLE_FUNCTION.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_ROLE_FUNCTION
+		(
+		ROLE_ID,				
+		FUNCTION_ID,				
+		QUERY_RANGE,				
+		QUERY_CORP,				
+		ROLE_FUNCTION_ID				
+		)
+		values
+		(
+		   #roleId:NUMERIC#,
+		   #functionId:NUMERIC#,
+		   #queryRange:NUMERIC#,
+		   #queryCorp:VARCHAR#,
+		   #roleFunctionId:NUMERIC#
+		)
+		]]>
+		<selectKey keyProperty="roleId" resultClass="java.lang.Long">
+      	  SELECT @@IDENTITY as roleId FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<update id="updateBaseRoleFunction" parameterClass="com.fescotech.apps.idm.base.domain.BaseRoleFunction">
+		<![CDATA[   
+		update
+		  BASE_ROLE_FUNCTION
+		set
+			QUERY_RANGE =  #queryRange:NUMERIC#,
+			QUERY_CORP =  #queryCorp:VARCHAR#,
+		where 
+		ROLE_ID =  #roleId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="loadBaseRoleFunctionByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseRoleFunction">
+		select 
+		<include refid="baseRoleFunctionSql.baseRoleFunction" /> 
+		from  BASE_ROLE_FUNCTION t
+		where 
+		ROLE_ID =  #value#
+	</select>
+	
+	<select id="queryBaseRoleFunction"  parameterClass="com.fescotech.apps.idm.base.domain.BaseRoleFunction" resultClass="com.fescotech.apps.idm.base.domain.BaseRoleFunction">
+		select 
+		<include refid="baseRoleFunctionSql.baseRoleFunction" /> 
+		from  BASE_ROLE_FUNCTION t
+		where 1=1
+		<isNotEmpty prepend="AND" property="roleId">
+			 ROLE_ID =  #roleId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionId">
+			 FUNCTION_ID =  #functionId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="queryRange">
+			 QUERY_RANGE =  #queryRange:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="queryCorp">
+			 QUERY_CORP =  #queryCorp:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleFunctionId">
+			 ROLE_FUNCTION_ID =  #roleFunctionId:NUMERIC#
+		</isNotEmpty>
+	</select>
+	<select id="queryBaseRoleFunctionCount"  parameterClass="com.fescotech.apps.idm.base.domain.BaseRoleFunction" resultClass="int">
+		select count(*)
+		from  BASE_ROLE_FUNCTION t
+		where 1=1
+		<isNotEmpty prepend="AND" property="roleId">
+			 ROLE_ID =  #roleId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionId">
+			 FUNCTION_ID =  #functionId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="queryRange">
+			 QUERY_RANGE =  #queryRange:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="queryCorp">
+			 QUERY_CORP =  #queryCorp:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="roleFunctionId">
+			 ROLE_FUNCTION_ID =  #roleFunctionId:NUMERIC#
+		</isNotEmpty>
+	</select>
+	<select id="queryFuncIdList"  parameterClass="java.lang.Long" resultClass="java.lang.Long">
+		select FUNCTION_ID from BASE_ROLE_FUNCTION  where  ROLE_ID =  #value# 
+	</select>
+	
+	<delete id="deleteRoleFunction" parameterClass="java.lang.Long">
+		delete from BASE_ROLE_FUNCTION where ROLE_ID = #value# 
+	</delete>
+	
+	<insert id="insertRoleFunction" parameterClass="com.fescotech.apps.idm.base.domain.BaseRoleFunction">
+		<selectKey keyProperty="roleFunctionId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_ROLE_FUNCTION.NEXTVAL FROM DUAL
+		</selectKey>
+    	<![CDATA[   
+		insert into BASE_ROLE_FUNCTION
+		(
+		ROLE_FUNCTION_ID,	
+		ROLE_ID,				
+		FUNCTION_ID				
+		)
+		values
+		(
+		   #roleFunctionId:NUMERIC#,
+		   #roleId:NUMERIC#,
+		   #functionId:NUMERIC#
+		)
+		]]>
+	</insert>
+	<delete id="deleteBatch">
+		delete from BASE_ROLE_FUNCTION where role_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[
+                 #[]#
+            ]]>
+		</iterate>
+	</delete>
+</sqlMap>
+

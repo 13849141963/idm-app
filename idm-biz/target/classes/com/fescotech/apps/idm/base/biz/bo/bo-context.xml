@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="baseCorpinfoBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseCorpinfoBo" parent="abstractBoT"></bean>
+	<bean id="baseOrganizationBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseOrganizationBo" parent="abstractBoT"></bean>
+	<bean id="baseUserBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseUserBo" parent="abstractBoT"></bean>
+	<bean id="baseRoleBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseRoleBo" parent="abstractBoT"></bean>
+	<bean id="baseFunctionBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseFunctionBo" parent="abstractBoT"></bean>
+	<bean id="baseSysBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseSysBo" parent="abstractBoT"></bean>
+	<bean id="baseRoleFunctionBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseRoleFunctionBo" parent="abstractBoT"></bean>
+	<bean id="baseDictBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseDictBo" parent="abstractBoT"></bean>
+	<bean id="baseUserRoleBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseUserRoleBo" parent="abstractBoT"></bean>
+	<bean id="baseLogBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseLogBo" parent="abstractBoT"></bean>
+	<bean id="apiLogBo" class="com.fescotech.apps.idm.base.biz.bo.impl.ApiLogBo" parent="abstractBoT"></bean>
+	<bean id="baseDataBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseDataBo" parent="abstractBoT"></bean>
+	<bean id="baseDataCustomerBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseDataCustomerBo" parent="abstractBoT"></bean>
+	<bean id="baseUserDataBo" class="com.fescotech.apps.idm.base.biz.bo.impl.BaseUserDataBo" parent="abstractBoT"></bean>
+</beans>

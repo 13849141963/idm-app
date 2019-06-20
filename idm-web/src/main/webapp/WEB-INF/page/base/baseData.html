@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>数据权限集管理</title>
+#parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp">
+  	<div style="width:100%;">
+		<div class="grid-btn">
+			#if($shiro.hasPermission("base:baseSys:save"))
+			<a class="btn btn-primary  abbBtn btn-sm" href="baseData_add.html"><i class="fa fa-plus-square"></i>&nbsp;&nbsp;新增</a>
+			#end
+			#if($shiro.hasPermission("base:baseSys:update"))
+			<button type="button"  class="btn btn-primary  abbBtn btn-sm" @click="update"><i class="fa fa-edit"></i>&nbsp;&nbsp;修改</button>
+			#end
+			#if($shiro.hasPermission("base:baseSys:delete"))
+			<button type="button"  class="btn btn-primary  abbBtn btn-sm" @click="del"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;删除</button>
+			#end
+
+			<button type="button"  class="btn btn-primary  abbBtn btn-sm" @click="queryQXJ"><i class="fa fa-search"></i>&nbsp;&nbsp;查看权限集范围</button>
+			
+			<button type="button"  class="btn btn-primary  abbBtn btn-sm" @click="addQXJ"><i class="fa fa-plus-square"></i>&nbsp;&nbsp;添加权限集范围 </button>
+
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+</div>
+<script src="${rc.contextPath}/js/base/baseData.js?_${date.systemTime}"></script>
+</body>
+</html>

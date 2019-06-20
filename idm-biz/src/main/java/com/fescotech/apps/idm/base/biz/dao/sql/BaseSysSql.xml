@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseSysSql">
+	<sql id="baseSysSql.getAllField">
+		select 
+		 t.SYS_ID sysId,	  	  	 				
+		 t.ALIAS alias,	  	  	 				
+		 t.SYS_NAME sysName,	  	  	 				
+		 t.SYS_URL sysUrl,	  	  	 				
+		 t.REMARK remark,	  	  	 				
+		 t.OPEN_FLAG openFlag,	  	  	 				
+		 t.OPERATOR operator,	  	  	 				
+		 t.OPERATOR_NAME operatorName,
+		 t.CREATOR_NAME creatorName,
+		 t.CREATOR creator,	  	  	 				
+		 t.OPER_TIME operTime 	  	 				
+		from  BASE_SYS t
+	</sql>
+	
+	<!-- 增加 -->
+	 <insert id="baseSysSql.insert" parameterClass="com.fescotech.apps.idm.base.domain.BaseSys">
+		<selectKey keyProperty="sysId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_SYS.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		<![CDATA[   
+		insert into BASE_SYS
+		(SYS_ID,
+		ALIAS,				
+		SYS_NAME,			
+		SYS_URL,				
+		REMARK,				
+		OPEN_FLAG,				
+		OPERATOR,				
+		OPERATOR_NAME,	
+		CREATOR_NAME,	
+		CREATOR,				
+		OPER_TIME			
+		)
+		values
+		(  #sysId:NUMERIC#,
+		   #alias:VARCHAR#,
+		   #sysName:VARCHAR#,
+		   #sysUrl:VARCHAR#,
+		   #remark:VARCHAR#,
+		   #openFlag:NUMERIC#,
+		   #operator:NUMERIC#,
+		   #operatorName:VARCHAR#,
+		   #creatorName:VARCHAR#,
+		   #creator:NUMERIC#,
+		   #operTime:DATE#
+		)
+		]]>
+	</insert>
+	
+	<!-- 根据主键查询 -->
+	<select id="baseSysSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseSys">
+		<include refid="baseSysSql.getAllField"/>
+		where SYS_ID =  #value#
+	</select>
+	
+	<!-- 根据主键删除 -->
+	<delete id="baseSysSql.deleteBatch">
+		delete from BASE_SYS where SYS_ID in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+	
+	<select id="baseSysSql.queryList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseSys">
+		select  
+		 t.SYS_ID sysId,	  	  	 					
+		 t.ALIAS alias,	  	  	 						
+		 t.SYS_NAME sysName,	  	  	 	  	 				
+		 t.SYS_URL sysUrl,	  	  	 	 	 				
+		 t.REMARK remark,	  	  	 	 	 				
+		 t.OPEN_FLAG openFlag,	  	  				
+		 t.OPERATOR operator,	  	  	
+		 t.OPERATOR_NAME operatorName,	
+		 t.CREATOR_NAME creatorName,
+		 t.CREATOR creator,
+		 t.OPER_TIME operTime 	  	 	
+		from ( select s.*,rowNum NUM from BASE_SYS s 
+		where rowNum &lt;= #end# 
+	 	<isNotEmpty prepend="AND" property="sysId">  
+        	SYS_ID =  #sysId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="alias">  
+        	ALIAS =  #alias#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysName">  
+        	SYS_NAME =  #sysName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysUrl">  
+        	SYS_URL =  #sysUrl#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	REMARK =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="openFlag">  
+        	OPEN_FLAG =  #openFlag#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operator">  
+        	OPERATOR =  #operator#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operatorName">  
+        	OPERATOR_NAME =  #operatorName#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="creatorName">  
+        	CREATOR_NAME =  #creatorName#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="creator">  
+        	CREATOR =  #creator#
+        </isNotEmpty>
+	 	<isNotEmpty prepend="AND" property="operTime">  
+        	OPER_TIME =  #operTime#
+        </isNotEmpty>
+        <isEmpty property="orderBy">
+        	order by SYS_ID asc
+        </isEmpty>
+        <isNotEmpty property="orderBy">
+            order by $orderBy$ $orderFlag$
+        </isNotEmpty>
+        ) t 
+        where 
+        t.NUM &gt;#start#
+	</select>
+	
+	<select id="baseSysSql.queryTotal"  parameterClass="java.util.HashMap"  resultClass="int">
+		select count(*) from BASE_SYS where 1=1 
+	 	<isNotEmpty prepend="AND" property="sysId">  
+        	SYS_ID =  #sysId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="alias">  
+        	ALIAS =  #alias#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysName">  
+        	SYS_NAME =  #sysName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysUrl">  
+        	SYS_URL =  #sysUrl#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	REMARK =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="openFlag">  
+        	OPEN_FLAG =  #openFlag#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operator">  
+        	OPERATOR =  #operator#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operatorName">  
+        	OPERATOR_NAME =  #operatorName#
+        </isNotEmpty>
+         <isNotEmpty prepend="AND" property="creatorName">  
+        	CREATOR_NAME =  #creatorName#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="creator">  
+        	CREATOR =  #creator#
+        </isNotEmpty>
+	 	<isNotEmpty prepend="AND" property="operTime">  
+        	OPER_TIME =  #operTime#
+        </isNotEmpty>
+	</select>
+	
+	<update id="baseSysSql.update" parameterClass="com.fescotech.apps.idm.base.domain.BaseSys">
+		<![CDATA[   
+		update  BASE_SYS
+		set 
+			ALIAS =          #alias:VARCHAR#,        
+			SYS_NAME =       #sysName:VARCHAR#,      
+			SYS_URL =        #sysUrl:VARCHAR#,       
+			REMARK =         #remark:VARCHAR#,       
+			OPEN_FLAG =      #openFlag:NUMERIC#,     
+			OPERATOR=        #operator:NUMERIC#,     
+			OPERATOR_NAME=   #operatorName:VARCHAR#, 
+			CREATOR_NAME=   #creatorName:VARCHAR#, 
+			CREATOR=   #creator:NUMERIC#, 
+			OPER_TIME=       #operTime:DATE#       
+			
+		where SYS_ID =  #sysId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="baseSysSql.queryBaseSysBySys" parameterClass="com.fescotech.apps.idm.base.domain.BaseSys" resultClass="com.fescotech.apps.idm.base.domain.BaseSys">
+		select  
+		 t.SYS_ID sysId,	  	  	 					
+		 t.ALIAS alias,	  	  	 						
+		 t.SYS_NAME sysName,	  	  	 	  	 				
+		 t.SYS_URL sysUrl,	  	  	 	 	 				
+		 t.REMARK remark,	  	  	 	 	 				
+		 t.OPEN_FLAG openFlag,	  	  				
+		 t.OPERATOR operator,	  	  	
+		 t.OPERATOR_NAME operatorName,	
+		 t.CREATOR_NAME creatorName,
+		 t.CREATOR creator,
+		 t.OPER_TIME operTime 	  	 	
+		from BASE_SYS t 
+		where 1=1
+	 	<isNotEmpty prepend="AND" property="sysId">  
+        	SYS_ID =  #sysId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="alias">  
+        	ALIAS =  #alias#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysName">  
+        	SYS_NAME =  #sysName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="sysUrl">  
+        	SYS_URL =  #sysUrl#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="remark">  
+        	REMARK =  #remark#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="openFlag">  
+        	OPEN_FLAG =  #openFlag#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operator">  
+        	OPERATOR =  #operator#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="operatorName">  
+        	OPERATOR_NAME =  #operatorName#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="creatorName">  
+        	CREATOR_NAME =  #creatorName#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="creator">  
+        	CREATOR =  #creator#
+        </isNotEmpty>
+	 	<isNotEmpty prepend="AND" property="operTime">  
+        	OPER_TIME =  #operTime#
+        </isNotEmpty>
+	</select>
+	
+</sqlMap>	

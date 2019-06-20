@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseUserSql">
+	<sql id="baseUser">
+		t.USER_ID       userId,
+		t.LOGIN_NAME    loginName,
+		t.USER_NAME     userName,
+		t.EXPIRE_TIME   expireTime,
+		t.ADDRESS       address,
+		t.PHONE         phone,
+		t.EMAIL         email,
+		t.USER_PWD      userPwd,
+		t.SEX           sex,
+		t.REMARK        remark,
+		t.USER_STATUS   userStatus,
+		t.CREATE_TIME   createTime,
+		t.USER_NUMBER   userNumber,
+		t.MOBILE        mobile,
+		t.CORP_ID       corpId,
+		t.POST_CODE     postCode,
+		t.OPER_TIME     operTime,
+		t.OPERATOR      operator,
+		t.USER_TYPE     userType,
+		t.ORG_ID        orgId,
+		t.OPERATOR_NAME operatorName,
+		t.CREATOR       creator,
+		t.CREATOR_NAME  creatorName,
+		t.CREATOR_ORG   creatorOrg,
+		t.OPERATOR_ORG  operatorOrg
+	</sql>
+
+	
+	<insert id="insertBaseUser" parameterClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		<selectKey keyProperty="userId" resultClass="java.lang.Long">
+			SELECT SEQ_BASE_USER.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		<![CDATA[   
+		insert into BASE_USER
+		(
+			USER_ID       ,	
+			LOGIN_NAME    ,	
+			USER_NAME     ,	
+			EXPIRE_TIME   ,			
+			ADDRESS       ,	
+			PHONE         ,	
+			EMAIL         ,	
+			USER_PWD      ,	
+			SEX           ,	
+			REMARK        ,
+			USER_STATUS   ,			
+			CREATE_TIME   ,			
+			USER_NUMBER   ,			
+			MOBILE        ,			
+			CORP_ID       ,	
+			POST_CODE     ,	
+			OPER_TIME     ,
+			OPERATOR      ,	
+			USER_TYPE     ,	
+			ORG_ID        ,					
+			OPERATOR_NAME ,				
+			CREATOR       ,				
+			CREATOR_NAME  ,				
+			CREATOR_ORG   ,	
+			OPERATOR_ORG  
+		)
+		values
+		(
+		   #userId:NUMERIC#,       
+		   #loginName:VARCHAR#,    
+		   #userName:VARCHAR#,     
+		   #expireTime:TIMESTAMP#,   
+		   #address:VARCHAR#,      
+		   #phone:VARCHAR#,        
+		   #email:VARCHAR#,        
+		   #userPwd:VARCHAR#,      
+		   #sex:NUMERIC#,          
+		   #remark:VARCHAR#,       
+		   #userStatus:NUMERIC#,   
+		   #createTime:TIMESTAMP#,   
+		   #userNumber:VARCHAR#,   
+		   #mobile:VARCHAR#,       
+		   #corpId:NUMERIC#,       
+		   #postCode:VARCHAR#,     
+		   #operTime:TIMESTAMP#,     
+		   #operator:NUMERIC#,     
+		   #userType:NUMERIC#,     
+		   #orgId:NUMERIC#,        
+		   #operatorName:VARCHAR#, 
+		   #creator:NUMERIC#,      
+		   #creatorName:VARCHAR#,  
+		   #creatorOrg:NUMERIC#,   
+		   #operatorOrg:NUMERIC#   
+		)
+		]]>
+		<selectKey keyProperty="userId" resultClass="java.lang.Long">
+			SELECT @@IDENTITY as userId FROM DUAL
+		</selectKey>
+	</insert>
+
+	<update id="updateBaseUser" parameterClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		<![CDATA[   
+		update
+		  BASE_USER
+		set
+			LOGIN_NAME   =    #loginName:VARCHAR#,    
+			USER_NAME    =    #userName:VARCHAR#,     
+			EXPIRE_TIME  =    #expireTime:TIMESTAMP#, 
+			ADDRESS      =    #address:VARCHAR#,      
+			PHONE        =    #phone:VARCHAR#,        
+			EMAIL        =    #email:VARCHAR#,        
+			USER_PWD     =    #userPwd:VARCHAR#,      
+			SEX          =    #sex:NUMERIC#,          
+			REMARK       =    #remark:VARCHAR#,       
+			USER_STATUS  =    #userStatus:NUMERIC#,   
+			CREATE_TIME  =    #createTime:TIMESTAMP#, 
+			USER_NUMBER  =    #userNumber:VARCHAR#,   
+			MOBILE       =    #mobile:VARCHAR#,       
+			CORP_ID      =    #corpId:NUMERIC#,       
+			POST_CODE    =    #postCode:VARCHAR#,     
+			OPER_TIME    =    #operTime:TIMESTAMP#,   
+			OPERATOR     =    #operator:NUMERIC#,     
+			USER_TYPE    =    #userType:NUMERIC#,     
+			ORG_ID       =    #orgId:NUMERIC#,        
+			OPERATOR_NAME=    #operatorName:VARCHAR#, 
+			CREATOR      =    #creator:NUMERIC#,      
+			CREATOR_NAME =    #creatorName:VARCHAR#,  
+			CREATOR_ORG  =    #creatorOrg:NUMERIC#,   
+			OPERATOR_ORG =    #operatorOrg:NUMERIC#   
+		where 
+		USER_ID =  #userId:NUMERIC#
+		]]>
+	</update>
+
+	<select id="loadBaseUserByKey" parameterClass="java.lang.Long"
+		resultClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		select
+		<include refid="baseUserSql.baseUser" />
+		from BASE_USER t
+		where
+		USER_ID = #value#
+	</select>
+
+	<select id="queryBaseUser" parameterClass="com.fescotech.apps.idm.base.domain.BaseUser"
+		resultClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		select
+		 <include refid="baseUserSql.baseUser" />
+		from BASE_USER t
+		where 1=1
+		<isNotEmpty prepend="AND" property="userId">                                         
+			USER_ID = #userId:NUMERIC#                                                       
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="loginName">                                      
+			LOGIN_NAME = #loginName:VARCHAR#                                                 
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userName">                                       
+			USER_NAME = #userName:VARCHAR#                                                   
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="expireTime">                                     
+			EXPIRE_TIME = #expireTime:TIMESTAMP#                                             
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="address">                                        
+			ADDRESS = #address:VARCHAR#                                                      
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="phone">                                          
+			PHONE = #phone:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="email">                                          
+			EMAIL = #email:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userPwd">                                        
+			USER_PWD = #userPwd:VARCHAR#                                                     
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="sex">
+			SEX = #sex:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			REMARK =  #remark:VARCHAR#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userStatus">                            
+			USER_STATUS = #userStatus:NUMERIC#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="createTime">                            
+			CREATE_TIME = #createTime:TIMESTAMP#                                    
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userNumber">                            
+			USER_NUMBER = #userNumber:VARCHAR#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="mobile">                                
+			MOBILE = #mobile:VARCHAR#                                               
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="corpId">                                
+			CORP_ID = #corpId:NUMERIC#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="postCode">                              
+			POST_CODE = #postCode:VARCHAR#                                          
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operTime">                              
+			OPER_TIME = #operTime:TIMESTAMP#                                        
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operator">                              
+			OPERATOR = #operator:NUMERIC#                                           
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userType">
+			USER_TYPE = #userType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="orgId">
+			ORG_ID = #orgId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorName">
+			OPERATOR_NAME = #operatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR = #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME = #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG = #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorOrg">
+			OPERATOR_ORG = #operatorOrg:NUMERIC# 
+		</isNotEmpty>
+	</select>
+	
+	<select id="baseUserSql.queryBaseUserCount" parameterClass="com.fescotech.apps.idm.base.domain.BaseUser"
+		resultClass="int">
+		select count(*)
+		from BASE_USER t
+		where 1=1
+		<isNotEmpty prepend="AND" property="userId">                                         
+			USER_ID = #userId:NUMERIC#                                                       
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="loginName">                                      
+			LOGIN_NAME = #loginName:VARCHAR#                                                 
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userName">                                       
+			USER_NAME = #userName:VARCHAR#                                                   
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="expireTime">                                     
+			EXPIRE_TIME = #expireTime:TIMESTAMP#                                             
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="address">                                        
+			ADDRESS = #address:VARCHAR#                                                      
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="phone">                                          
+			PHONE = #phone:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="email">                                          
+			EMAIL = #email:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userPwd">                                        
+			USER_PWD = #userPwd:VARCHAR#                                                     
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="sex">
+			SEX = #sex:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			REMARK =  #remark:VARCHAR#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userStatus">                            
+			USER_STATUS = #userStatus:NUMERIC#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="createTime">                            
+			CREATE_TIME = #createTime:TIMESTAMP#                                    
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userNumber">                            
+			USER_NUMBER = #userNumber:VARCHAR#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="mobile">                                
+			MOBILE = #mobile:VARCHAR#                                               
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="corpId">                                
+			CORP_ID = #corpId:NUMERIC#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="postCode">                              
+			POST_CODE = #postCode:VARCHAR#                                          
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operTime">                              
+			OPER_TIME = #operTime:TIMESTAMP#                                        
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operator">                              
+			OPERATOR = #operator:NUMERIC#                                           
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userType">
+			USER_TYPE = #userType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="orgId">
+			ORG_ID = #orgId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorName">
+			OPERATOR_NAME = #operatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR = #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME = #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG = #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorOrg">
+			OPERATOR_ORG = #operatorOrg:NUMERIC# 
+		</isNotEmpty>
+	</select>
+	
+	<!-- 做主页显示时用的查询总数 -->
+	<select id="baseUserSql.queryBaseUserTotal" parameterClass="java.util.HashMap"
+		resultClass="int">
+		select count(*)
+		from BASE_USER t
+		where 1=1
+		<isNotEmpty prepend="AND" property="userId">                                         
+			USER_ID = #userId:NUMERIC#                                                       
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="loginName">                                      
+			LOGIN_NAME = #loginName:VARCHAR#                                                 
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userName">                                       
+			USER_NAME = #userName:VARCHAR#                                                   
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="expireTime">                                     
+			EXPIRE_TIME = #expireTime:TIMESTAMP#                                             
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="address">                                        
+			ADDRESS = #address:VARCHAR#                                                      
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="phone">                                          
+			PHONE = #phone:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="email">                                          
+			EMAIL = #email:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userPwd">                                        
+			USER_PWD = #userPwd:VARCHAR#                                                     
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="sex">
+			SEX = #sex:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			REMARK =  #remark:VARCHAR#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userStatus">                            
+			USER_STATUS = #userStatus:NUMERIC#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="createTime">                            
+			CREATE_TIME = #createTime:TIMESTAMP#                                    
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userNumber">                            
+			USER_NUMBER = #userNumber:VARCHAR#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="mobile">                                
+			MOBILE = #mobile:VARCHAR#                                               
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="corpId">                                
+			CORP_ID = #corpId:NUMERIC#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="postCode">                              
+			POST_CODE = #postCode:VARCHAR#                                          
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operTime">                              
+			OPER_TIME = #operTime:TIMESTAMP#                                        
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operator">                              
+			OPERATOR = #operator:NUMERIC#                                           
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userType">
+			USER_TYPE = #userType:NUMERIC#
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="operatorName">
+			OPERATOR_NAME = #operatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR = #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME = #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG = #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorOrg">
+			OPERATOR_ORG = #operatorOrg:NUMERIC# 
+		</isNotEmpty>
+		<isNotNull  prepend="AND" property="orgIds">
+			ORG_ID in
+			<iterate  property="orgIds" close=")" open="(" conjunction=",">
+				#orgIds[]#
+			</iterate>
+		</isNotNull>
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="baseUserSql.queryUserList" parameterClass="java.util.HashMap"
+		resultClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		select
+			<include refid="baseUserSql.baseUser"/>
+		from ( select t.*,rowNum NUM from BASE_USER t
+		where rowNum &lt;= #end#
+
+				<isNotEmpty prepend="AND" property="userId">                                         
+			USER_ID = #userId:NUMERIC#                                                       
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="loginName">                                      
+			LOGIN_NAME = #loginName:VARCHAR#                                                 
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userName">                                       
+			USER_NAME = #userName:VARCHAR#                                                   
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="expireTime">                                     
+			EXPIRE_TIME = #expireTime:TIMESTAMP#                                             
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="address">                                        
+			ADDRESS = #address:VARCHAR#                                                      
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="phone">                                          
+			PHONE = #phone:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="email">                                          
+			EMAIL = #email:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userPwd">                                        
+			USER_PWD = #userPwd:VARCHAR#                                                     
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="sex">
+			SEX = #sex:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			REMARK =  #remark:VARCHAR#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userStatus">                            
+			USER_STATUS = #userStatus:NUMERIC#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="createTime">                            
+			CREATE_TIME = #createTime:TIMESTAMP#                                    
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userNumber">                            
+			USER_NUMBER = #userNumber:VARCHAR#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="mobile">                                
+			MOBILE = #mobile:VARCHAR#                                               
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="corpId">                                
+			CORP_ID = #corpId:NUMERIC#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="postCode">                              
+			POST_CODE = #postCode:VARCHAR#                                          
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operTime">                              
+			OPER_TIME = #operTime:TIMESTAMP#                                        
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operator">                              
+			OPERATOR = #operator:NUMERIC#                                           
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userType">
+			USER_TYPE = #userType:NUMERIC#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="operatorName">
+			OPERATOR_NAME = #operatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR = #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME = #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG = #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorOrg">
+			OPERATOR_ORG = #operatorOrg:NUMERIC# 
+		</isNotEmpty>
+		<isNotNull  prepend="AND" property="orgIds">
+			ORG_ID in
+			<iterate property="orgIds" close=")" open="(" conjunction=",">
+				#orgIds[]#
+			</iterate>
+		</isNotNull>
+		<isEmpty property="orderBy">
+        	order by USER_ID asc
+        </isEmpty>
+		<isNotEmpty property="orderBy">
+            order by $orderBy$ $orderFlag$
+        </isNotEmpty>
+		<!-- order by USER_ID desc -->
+		) t
+		where
+		t.NUM &gt;#start#
+	</select>
+	
+	
+	<!-- 查询 -->
+	<select id="baseUserSql.queryUser" parameterClass="java.util.HashMap"
+		resultClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		select
+			<include refid="baseUserSql.baseUser" />
+		from BASE_USER t
+		where 1=1
+				<isNotEmpty prepend="AND" property="userId">                                         
+			USER_ID = #userId:NUMERIC#                                                       
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="loginName">                                      
+			LOGIN_NAME = #loginName:VARCHAR#                                                 
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userName">                                       
+			USER_NAME = #userName:VARCHAR#                                                   
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="expireTime">                                     
+			EXPIRE_TIME = #expireTime:TIMESTAMP#                                             
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="address">                                        
+			ADDRESS = #address:VARCHAR#                                                      
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="phone">                                          
+			PHONE = #phone:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="email">                                          
+			EMAIL = #email:VARCHAR#                                                          
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="userPwd">                                        
+			USER_PWD = #userPwd:VARCHAR#                                                     
+		</isNotEmpty>                                                                        
+		<isNotEmpty prepend="AND" property="sex">
+			SEX = #sex:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			REMARK =  #remark:VARCHAR#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userStatus">                            
+			USER_STATUS = #userStatus:NUMERIC#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="createTime">                            
+			CREATE_TIME = #createTime:TIMESTAMP#                                    
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="userNumber">                            
+			USER_NUMBER = #userNumber:VARCHAR#                                      
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="mobile">                                
+			MOBILE = #mobile:VARCHAR#                                               
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="corpId">                                
+			CORP_ID = #corpId:NUMERIC#                                              
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="postCode">                              
+			POST_CODE = #postCode:VARCHAR#                                          
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operTime">                              
+			OPER_TIME = #operTime:TIMESTAMP#                                        
+		</isNotEmpty>                                                               
+		<isNotEmpty prepend="AND" property="operator">                              
+			OPERATOR = #operator:NUMERIC#                                           
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userType">
+			USER_TYPE = #userType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="orgId">
+			ORG_ID = #orgId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorName">
+			OPERATOR_NAME = #operatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR = #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME = #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG = #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operatorOrg">
+			OPERATOR_ORG = #operatorOrg:NUMERIC# 
+		</isNotEmpty>
+	</select>
+
+	<!-- 根据主键删除 -->
+	<delete id="baseUserSql.deleteBatch">
+		delete from BASE_USER where USER_ID in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[#[]#]]>
+		</iterate>
+	</delete>
+
+	<!-- 根据名字查询 -->
+	<select id="queryBaseUserByName" parameterClass="java.lang.String"
+		resultClass="com.fescotech.apps.idm.base.domain.vo.BaseUserVo">
+		select
+		<include refid="baseUserSql.baseUser" />
+		from BASE_USER t
+		where
+		LOGIN_NAME = #value#
+	</select>
+	
+	<!-- 根据主键查询 -->
+	<select id="queryBaseUserById" parameterClass="java.lang.Long"
+		resultClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		select
+			<include refid="baseUserSql.baseUser" />
+		from BASE_USER t
+		where
+		USER_ID = #userId#
+	</select>
+	
+	<!-- 根据用户名查询 -->
+	<select id="queryBaseUserByUserName" parameterClass="java.lang.String"
+		resultClass="com.fescotech.apps.idm.base.domain.BaseUser">
+		select
+			<include refid="baseUserSql.baseUser" />
+		from BASE_USER t
+		where
+		LOGIN_NAME = #loginName:VARCHAR#
+	</select>
+	
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms"  parameterClass="java.util.HashMap"  resultClass="java.lang.String">
+		select m.perm from base_user_role ur 
+			LEFT JOIN BASE_ROLE_FUNCTION rm on ur.role_id = rm.role_id 
+			LEFT JOIN BASE_FUNCTION m on rm.FUNCTION_ID = m.FUNCTION_ID 
+			<isNotEmpty prepend="AND" property="sysId">
+				m.SYS_ID = #sysId#
+			</isNotEmpty>
+		where 1=1
+		<isNotEmpty prepend="AND" property="userId">
+			ur.user_id = #userId#
+		</isNotEmpty>
+		
+		
+	</select>
+</sqlMap>
+

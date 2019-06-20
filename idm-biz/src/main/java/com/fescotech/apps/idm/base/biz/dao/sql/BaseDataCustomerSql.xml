@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseDataCustomerSql">
+	<sql id="baseDataCustomerSql.getAllField">
+		select 
+		 t.DATA_CUSTOMER_ID dataCustomerId,	  	  	 				
+		 t.CUSTOMER_ID customerId,	  	  	 				
+		 t.BASE_ID baseId,	  	  	 				
+		 t.CUSTOMER_NAME customerName,	  	  	 				
+		 t.CUSTOMER_PARENT_ID customerParentId	  	  	 				
+		from  BASE_DATA_CUSTOMER t
+	</sql>
+    <insert id="baseDataCustomerSql.insert" parameterClass="com.fescotech.apps.idm.base.domain.BaseDataCustomer">
+        <selectKey keyProperty="dataCustomerId" resultClass="java.lang.Long">
+            select SEQ_BASE_DATA_CUSTOMER.nextval as  dataCustomerId  from dual
+        </selectKey>
+		<![CDATA[   
+		insert into BASE_DATA_CUSTOMER
+		(
+		DATA_CUSTOMER_ID,				
+		CUSTOMER_ID,				
+		BASE_ID,				
+		CUSTOMER_NAME,				
+		CUSTOMER_PARENT_ID				
+		)
+		values
+		(
+		   #dataCustomerId:NUMERIC#,
+		   #customerId:NUMERIC#,
+		   #baseId:NUMERIC#,
+		   #customerName:VARCHAR#,
+		   #customerParentId:NUMERIC#
+		)
+		]]>
+
+	</insert>
+	
+	<update id="baseDataCustomerSql.update" parameterClass="com.fescotech.apps.idm.base.domain.BaseDataCustomer">
+		<![CDATA[   
+		update
+		  BASE_DATA_CUSTOMER
+		set
+			CUSTOMER_ID =  #customerId:NUMERIC#,
+			BASE_ID =  #baseId:NUMERIC#,
+			CUSTOMER_NAME =  #customerName:VARCHAR#,
+			CUSTOMER_PARENT_ID =  #customerParentId:NUMERIC#
+		where 
+		DATA_CUSTOMER_ID =  #dataCustomerId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="baseDataCustomerSql.queryByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.BaseDataCustomer">
+		<include refid="baseDataCustomerSql.getAllField"/>
+		where 
+		DATA_CUSTOMER_ID =  #value#
+	</select>
+	<select id="baseDataCustomerSql.queryBaseDataCustomer"  parameterClass="com.fescotech.apps.idm.base.domain.BaseDataCustomer" resultClass="com.fescotech.apps.idm.base.domain.BaseDataCustomer">
+		<include refid="baseDataCustomerSql.getAllField"/>
+		where 1=1 
+	 	<isNotEmpty prepend="AND" property="dataCustomerId">  
+        	DATA_CUSTOMER_ID =  #dataCustomerId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="customerId">  
+        	CUSTOMER_ID =  #customerId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="baseId">  
+        	BASE_ID =  #baseId#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="customerName">  
+        	CUSTOMER_NAME =  #customerName#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="AND" property="customerParentId">  
+        	CUSTOMER_PARENT_ID =  #customerParentId#
+        </isNotEmpty>   
+	</select>
+	<select id="baseDataCustomerSql.queryList" parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseDataCustomer">
+		select 
+		 t.DATA_CUSTOMER_ID dataCustomerId,	  	  	 				
+		 t.CUSTOMER_ID customerId,	  	  	 				
+		 t.BASE_ID baseId,	  	  	 				
+		 t.CUSTOMER_NAME customerName,	  	  	 				
+		 t.CUSTOMER_PARENT_ID customerParentId	
+        from ( select s.*,rowNum NUM from base_data_customer s
+        where rowNum &lt;= #end#
+        <isNotEmpty property="baseId">
+          and  BASE_ID= $baseId$
+        </isNotEmpty>
+        <isNotEmpty property="customerParentId">
+          and  CUSTOMER_PARENT_ID= $customerParentId$
+        </isNotEmpty>           
+        <isNotEmpty property="dataId">
+            order by $dataId$
+        </isNotEmpty>
+        ) t
+        where
+        t.NUM &gt;#start#
+    </select>
+    <select id="baseDataCustomerSql.queryTotal"    resultClass="int">
+        select count(*) from base_data_customer where 1=1
+    </select>
+    <!-- 根据主键删除 -->
+    <delete id="baseDataCustomerSql.deleteBatch">
+        delete from base_data_customer where data_customer_id in
+        <iterate close=")" open="(" conjunction=",">
+            <![CDATA[#[]#]]>
+        </iterate>
+    </delete>
+
+	<delete id="baseDataCustomerSql.deleteTree">
+		delete from BASE_DATA_CUSTOMER b
+		where (b.base_id = #baseId# and b.customer_id = #customerId#)
+		or (b.base_id = #baseId# and b.customer_parent_id = #customerId#)
+	</delete>
+	<select id="baseDataCustomerSql.queryTreeNodes" resultClass="com.fescotech.apps.idm.base.domain.BaseDataCustomer">
+		select t.DATA_CUSTOMER_ID dataCustomerId,
+		t.CUSTOMER_ID customerId,
+		t.BASE_ID baseId,
+		t.CUSTOMER_NAME customerName,
+		t.CUSTOMER_PARENT_ID customerParentId
+		from BASE_DATA_CUSTOMER t
+		where (t.customer_parent_id = #customerId# or t.customer_id = #customerId#)
+		and t.base_id = #baseId#
+	</select>
+</sqlMap>
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean name="/user/login-check.asmx" class="com.fescotech.apps.idm.api.web.controller.UserLoginController" />
+	<bean name="/user/change_pwd.asmx" class="com.fescotech.apps.idm.api.web.controller.UserChangePwdController" />
+	<bean name="/user/user_query.asmx" class="com.fescotech.apps.idm.api.web.controller.UserQueryController" />
+	<bean name="/user/user_function.asmx" class="com.fescotech.apps.idm.api.web.controller.GetUserFunctionController" />
+	<bean name="/user/user_queryByRoleId.asmx" class="com.fescotech.apps.idm.api.web.controller.UserQueryByRoleIdController" />
+	<bean name="/role/role_queryByUserId.asmx" class="com.fescotech.apps.idm.api.web.controller.RoleQueryByUserIdController" />
+	<bean name="/crop/crop_saveCropInfo.asmx" class="com.fescotech.apps.idm.api.web.controller.SaveCropInfoController" />
+</beans>

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE sqlMap 
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseFunctionSql">
+	<sql id="baseFunction">
+		 t.FUNCTION_ID functionId,	  	  	 				
+		 t.FUNCTION_NAME functionName,	  	  	 				
+		 t.URL url,	  	  	 				
+		 t.PARENT_ID parentId,	  	  	 				
+		 t.REMARK remark,	  	  	 				
+		 t.SHOW_ORDER showOrder,	  	  	 				
+		 t.FUNC_LEVEL funcLevel,	  	  	 				
+		 t.IS_LEAF isLeaf,	  	  	 				
+		 t.FUNCTION_TYPE functionType,	  	  	 				
+		 t.FUN_STATE funState,	  	  	 				
+		 t.OPERATOR operator,	  	  	 				
+		 t.OPER_TIME operTime,	  	  	 				
+		 t.CORP_ID corpId,	  	  	 				
+		 t.SYS_ID sysId,	  	  	 				
+		 t.PERM perm,	
+		 t.CREATOR creator,
+		 t.CREATOR_NAME creatorName,
+		 t.CREATOR_ORG creatorOrg,
+		 t.CREATE_TIME createTime 	  	 				
+	</sql>
+
+    <insert id="insertBaseFunction" parameterClass="com.fescotech.apps.idm.base.domain.vo.BaseFunctionVo">
+			<selectKey keyProperty="functionId" resultClass="java.lang.Long">
+	      	SELECT SEQ_BASE_FUNCTION.NEXTVAL FROM DUAL
+			</selectKey>
+		<![CDATA[   
+		insert into BASE_FUNCTION
+		(
+		FUNCTION_ID,				
+		FUNCTION_NAME,				
+		URL,				
+		PARENT_ID,				
+		REMARK,				
+		SHOW_ORDER,				
+		FUNC_LEVEL,				
+		IS_LEAF,				
+		FUNCTION_TYPE,				
+		FUN_STATE,				
+		OPERATOR,				
+		OPER_TIME,				
+		CORP_ID,				
+		SYS_ID,				
+		PERM,
+		CREATOR,
+		CREATOR_NAME,
+		CREATOR_ORG,
+		CREATE_TIME			
+		)
+		values
+		(
+		   #functionId:NUMERIC#,
+		   #functionName:VARCHAR#,
+		   #url:VARCHAR#,
+		   #parentId:NUMERIC#,
+		   #remark:VARCHAR#,
+		   #showOrder:NUMERIC#,
+		   #funcLevel:NUMERIC#,
+		   #isLeaf:NUMERIC#,
+		   #functionType:NUMERIC#,
+		   #funState:NUMERIC#,
+		   #operator:NUMERIC#,
+		   #operTime:TIMESTAMP#,
+		   #corpId:NUMERIC#,
+		   #sysId:NUMERIC#,
+		   #perm:VARCHAR#,
+		   #creator:NUMERIC#,
+		   #creatorName:VARCHAR#,
+		   #creatorOrg:NUMERIC#,
+		   #createTime:TIMESTAMP#
+		)
+		]]>
+		<selectKey keyProperty="functionId" resultClass="java.lang.Long">
+      	  SELECT @@IDENTITY as functionId FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<update id="updateBaseFunction" parameterClass="com.fescotech.apps.idm.base.domain.vo.BaseFunctionVo">
+		<![CDATA[   
+		update
+		  BASE_FUNCTION
+		set
+			FUNCTION_NAME =  #functionName:VARCHAR#,
+			URL =  #url:VARCHAR#,
+			PARENT_ID =  #parentId:NUMERIC#,
+			REMARK =  #remark:VARCHAR#,
+			SHOW_ORDER =  #showOrder:NUMERIC#,
+			FUNC_LEVEL =  #funcLevel:NUMERIC#,
+			IS_LEAF =  #isLeaf:NUMERIC#,
+			FUNCTION_TYPE =  #functionType:NUMERIC#,
+			FUN_STATE =  #funState:NUMERIC#,
+			OPERATOR =  #operator:NUMERIC#,
+			OPER_TIME =  #operTime:TIMESTAMP#,
+			CORP_ID =  #corpId:NUMERIC#,
+			SYS_ID =  #sysId:NUMERIC#,
+			PERM =  #perm:VARCHAR#,
+			CREATOR =  #creator:NUMERIC#,
+			CREATOR_NAME =  #creatorName:VARCHAR#,
+			CREATOR_ORG =  #creatorOrg:NUMERIC#,
+			CREATE_TIME = #createTime:TIMESTAMP#
+		where 
+		FUNCTION_ID =  #functionId:NUMERIC#
+		]]>
+	</update>
+	
+	<select id="loadBaseFunctionByKey"  parameterClass="java.lang.Long" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseFunctionVo">
+		select 
+		<include refid="baseFunctionSql.baseFunction" /> 
+		from  BASE_FUNCTION t
+		where 
+		FUNCTION_ID =  #value#
+	</select>
+	
+	<select id="queryBaseFunction"  parameterClass="com.fescotech.apps.idm.base.domain.BaseFunction" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseFunctionVo">
+		select 
+		<include refid="baseFunctionSql.baseFunction" /> 
+		from  BASE_FUNCTION t
+		where 1=1
+		<isNotEmpty prepend="AND" property="functionId">
+			 FUNCTION_ID =  #functionId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionName">
+			 FUNCTION_NAME =  #functionName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="url">
+			 URL =  #url:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+			 PARENT_ID =  #parentId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			 REMARK =  #remark:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="showOrder">
+			 SHOW_ORDER =  #showOrder:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="funcLevel">
+			 FUNC_LEVEL =  #funcLevel:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isLeaf">
+			 IS_LEAF =  #isLeaf:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionType">
+			 FUNCTION_TYPE =  #functionType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="funState">
+			 FUN_STATE =  #funState:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator">
+			 OPERATOR =  #operator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpId">
+			 CORP_ID =  #corpId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sysId">
+			 SYS_ID =  #sysId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="perm">
+			 PERM =  #perm:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR =  #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME =  #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG =  #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createTime">
+			CREATE_TIME =  #createTime:TIMESTAMP#
+		</isNotEmpty>
+	</select>
+	<select id="queryBaseFunctionCount"  parameterClass="com.fescotech.apps.idm.base.domain.BaseFunction" resultClass="int">
+		select count(*)
+		from  BASE_FUNCTION t
+		where 1=1
+		<isNotEmpty prepend="AND" property="functionId">
+			 FUNCTION_ID =  #functionId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionName">
+			 FUNCTION_NAME =  #functionName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="url">
+			 URL =  #url:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="parentId">
+			 PARENT_ID =  #parentId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			 REMARK =  #remark:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="showOrder">
+			 SHOW_ORDER =  #showOrder:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="funcLevel">
+			 FUNC_LEVEL =  #funcLevel:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isLeaf">
+			 IS_LEAF =  #isLeaf:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionType">
+			 FUNCTION_TYPE =  #functionType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="funState">
+			 FUN_STATE =  #funState:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator">
+			 OPERATOR =  #operator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpId">
+			 CORP_ID =  #corpId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sysId">
+			 SYS_ID =  #sysId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="perm">
+			 PERM =  #perm:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR =  #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME =  #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG =  #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createTime">
+			CREATE_TIME =  #createTime:TIMESTAMP#
+		</isNotEmpty>
+	</select>
+	
+	<select id="queryBaseFunctionList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.BaseFunction">
+		select 
+		<include refid="baseFunctionSql.baseFunction" /> 
+		from  BASE_FUNCTION t
+		where 1=1
+		<isNotEmpty prepend="AND" property="functionId">
+			 FUNCTION_ID =  #functionId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionName">
+			 FUNCTION_NAME =  #functionName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="url">
+			 URL =  #url:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+			 PARENT_ID =  #parentId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="remark">
+			 REMARK =  #remark:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="showOrder">
+			 SHOW_ORDER =  #showOrder:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="funcLevel">
+			 FUNC_LEVEL =  #funcLevel:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="isLeaf">
+			 IS_LEAF =  #isLeaf:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="functionType">
+			 FUNCTION_TYPE =  #functionType:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="funState">
+			 FUN_STATE =  #funState:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operator">
+			 OPERATOR =  #operator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="operTime">
+			 OPER_TIME =  #operTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="corpId">
+			 CORP_ID =  #corpId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sysId">
+			 SYS_ID =  #sysId:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="perm">
+			 PERM =  #perm:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creator">
+			CREATOR =  #creator:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorName">
+			CREATOR_NAME =  #creatorName:VARCHAR#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="creatorOrg">
+			CREATOR_ORG =  #creatorOrg:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createTime">
+			CREATE_TIME =  #createTime:TIMESTAMP#
+		</isNotEmpty>
+		<isNotEmpty property="orderBy">
+            order by $orderBy$ $orderFlag$
+        </isNotEmpty>
+	</select>
+	<select id="queryList"  parameterClass="java.util.HashMap" resultClass="com.fescotech.apps.idm.base.domain.vo.BaseFunctionVo">
+		select 
+		<include refid="baseFunctionSql.baseFunction" /> 
+		from ( select s.*,rownum NUM from base_function s 
+		where rownum &lt;= #end# 
+		<isNotEmpty prepend="AND" property="functionId">  
+        	FUNCTION_ID =  #functionId:NUMERIC#
+        </isNotEmpty>   
+	 	<isNotEmpty prepend="OR" property="parentId">  
+        	 PARENT_ID =  #parentId:NUMERIC#
+        </isNotEmpty>  
+        <isNotEmpty prepend="AND" property="sysId">  
+        	SYS_ID =  #sysId:NUMERIC#
+        </isNotEmpty> 
+        <isNotEmpty prepend="AND" property="isLeaf">
+			 IS_LEAF =  #isLeaf:NUMERIC#
+		</isNotEmpty>
+		<isNotEmpty property="orderBy">
+            order by $orderBy$ $orderFlag$
+        </isNotEmpty>
+        ) t 
+        where 
+        t.NUM &gt; #start#
+	</select>
+	<delete id="deleteBatch">
+		delete from BASE_FUNCTION where function_id in 
+		<iterate close=")" open="(" conjunction=",">
+			<![CDATA[
+                 #[]#
+            ]]>
+		</iterate>
+	</delete>
+</sqlMap>
